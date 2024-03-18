@@ -1,0 +1,47 @@
+Proposal: NutriMix - Empowering Home Chefs
+Project Summary:NutriMix is an innovative online recipe platform designed to cater to individuals seeking 
+quick and nutritious meal solutions. With a focus on simplicity and accessibility, our website aims to 
+empower users of all skill levels to create delicious meals in just 5-10 minutes. By providing a collaborative
+space for sharing, editing, and receiving feedback on recipes, NutriMix revolutionizes the way people 
+approach home cooking, fostering a vibrant community of home chefs.
+Stakeholders:
+Xuan (Front-End Developer): Responsible for designing the user interface and implementing key elements
+of the website to ensure an intuitive and visually appealing user experience.
+Jessica (Front-End Developer & Designer): Contributes to front-end development and design, focusing on
+structuring the flow of the user journey for seamless navigation and engagement.
+Wei (Backend Developer): Leads backend development, responsible for creating efficient APIs for recipe 
+management.
+Myrna (Backend Developer): Collaborates with Wei on backend development, focusing on database architecture
+and API implementation.
+End-Users:Our primary end-users include:
+Individuals with limited cooking skills seeking quick and easy meal solutions.
+Health-conscious individuals looking for nutritious recipes made with natural and organic ingredients.
+Home chefs interested in sharing their culinary creations and receiving feedback from the community.
+Technologies:NutriMix utilizes the following technologies for its development:
+Python: Backend development and API creation.
+React.js: Frontend development for dynamic user interfaces.
+Node.js: Powers the backend infrastructure and API development.
+JavaScript (JS), HTML, CSS: Core technologies for web development, providing interactive and visually 
+appealing user experiences.
+Rationale: These technologies are selected for their compatibility, flexibility, and scalability, 
+enabling us to deliver a robust and efficient online recipe platform within the project's timeframe.
+Timeline and Milestones:Our condensed project timeline is as follows:
+Week 1: Requirements gathering, project planning, and finalization of wireframes.
+Week 2: Frontend development and design implementation.
+Week 3: Backend development, database architecture design, and API creation.
+Week 4: Integration of frontend and backend functionality.
+Week 5: Testing, debugging, optimization, and deployment.
+Milestones:
+Finalization of wireframes and design mockups.
+Completion of frontend development tasks.
+Backend development, database architecture design, and API creation.
+Integration of frontend and backend functionality.
+User acceptance testing, bug fixing, optimization, and deployment.
+Communication Plan:Effective communication is essential for the success of our project. We propose the 
+following communication plan:
+Weekly Meetings: Regular meetings will be held every Monday to discuss project progress, address any 
+challenges, and align on priorities.
+Communication Channels: Slack will serve as our primary communication channel for day-to-day interactions,
+ while email will be used for formal communication and document sharing.
+Feedback Mechanism: We encourage open communication and feedback from all stakeholders throughout the 
+project lifecycle to ensure transparency and collaboration.
