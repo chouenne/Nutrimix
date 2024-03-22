@@ -1,17 +1,16 @@
-
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-
+import { BrowserRouter, Routes, Route} from 'react-router-dom'
+import Home from './pages/Home'
 
 function App() {
-
-
-
-
   return (
-    <Box className="App">
-      <Typography variant="h1">Latest Posts</Typography>
-    </Box>
+    <BrowserRouter>
+    <div>
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </div>
+  </BrowserRouter>
   );
 }
 
