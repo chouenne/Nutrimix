@@ -7,3 +7,8 @@
 .recipe-card {
   width: 100%; 
 }
+
+.recipe-card img{
+  width:80%;
+  height:250px;
+}

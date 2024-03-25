@@ -1,77 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Header from '../components/HomePageComponents/Header';
 import Sortmenu from '../components/HomePageComponents/Sortmenu';
 import FilterButton from '../components/HomePageComponents/FilterButton';
 import RecipeCard from '../components/HomePageComponents/RecipeCard';
 import Footer from '../components/HomePageComponents/Footer';
+// import recipesData from '../recipes.json';
 import '../css/Home.css'; 
 
 function Home() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [visiblePosts, setVisiblePosts] = useState(12); // Number of initially visible posts
 
-  const initialRecipes = [
-    { id: 1, imageUrl: 'recipe1.jpg', title: 'Recipe 1', chefName: 'Chef A' },
-    { id: 2, imageUrl: 'recipe2.jpg', title: 'Recipe 2', chefName: 'Chef B' },
-    { id: 3, imageUrl: 'recipe3.jpg', title: 'Recipe 3', chefName: 'Chef C' },
-    { id: 4, imageUrl: 'recipe3.jpg', title: 'Recipe 4', chefName: 'Chef D' },
-    { id: 5, imageUrl: 'recipe3.jpg', title: 'Recipe 5', chefName: 'Chef E' },
-    { id: 6, imageUrl: 'recipe3.jpg', title: 'Recipe 6', chefName: 'Chef F' },
-    { id: 7, imageUrl: 'recipe3.jpg', title: 'Recipe 7', chefName: 'Chef G' },
-    { id: 8, imageUrl: 'recipe3.jpg', title: 'Recipe 8', chefName: 'Chef H' },
-    { id: 9, imageUrl: 'recipe3.jpg', title: 'Recipe 9', chefName: 'Chef I' },
-    { id: 10, imageUrl: 'recipe3.jpg', title: 'Recipe 10', chefName: 'Chef J' },
-    { id: 11, imageUrl: 'recipe3.jpg', title: 'Recipe 11', chefName: 'Chef K' },
-    { id: 12, imageUrl: 'recipe3.jpg', title: 'Recipe 12', chefName: 'Chef L' },
-    { id: 13, imageUrl: 'recipe1.jpg', title: 'Recipe 1', chefName: 'Chef A' },
-    { id: 14, imageUrl: 'recipe2.jpg', title: 'Recipe 2', chefName: 'Chef B' },
-    { id: 15, imageUrl: 'recipe3.jpg', title: 'Recipe 3', chefName: 'Chef C' },
-    { id: 16, imageUrl: 'recipe3.jpg', title: 'Recipe 4', chefName: 'Chef D' },
-    { id: 17, imageUrl: 'recipe3.jpg', title: 'Recipe 5', chefName: 'Chef E' },
-    { id: 18, imageUrl: 'recipe3.jpg', title: 'Recipe 6', chefName: 'Chef F' },
-    { id: 19, imageUrl: 'recipe3.jpg', title: 'Recipe 7', chefName: 'Chef G' },
-    { id: 20, imageUrl: 'recipe3.jpg', title: 'Recipe 8', chefName: 'Chef H' },
-    { id: 21, imageUrl: 'recipe3.jpg', title: 'Recipe 9', chefName: 'Chef I' },
-    { id: 22, imageUrl: 'recipe3.jpg', title: 'Recipe 10', chefName: 'Chef J' },
-    { id: 23, imageUrl: 'recipe3.jpg', title: 'Recipe 11', chefName: 'Chef K' },
-    { id: 24, imageUrl: 'recipe3.jpg', title: 'Recipe 12', chefName: 'Chef L' },
-  ];
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
-  const [visibleRecipes, setVisibleRecipes] = useState(12); 
+  const fetchPosts = () => {
+    setLoading(true);
+    // Define your API endpoint URL
+    const API_URL = 'http://localhost:8000/api/';
 
-  const loadMore = () => {
-    setVisibleRecipes(prevVisibleRecipes => prevVisibleRecipes + 12);
+    // Fetch data from the API
+    axios.get(API_URL)
+      .then(response => {
+        // Set the fetched posts to state
+        setPosts(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching posts:', error);
+        setLoading(false);
+      });
   };
 
-  const divStyle = {
-    display: 'flex',
+  const handleLoadMore = () => {
+    setVisiblePosts(prevVisiblePosts => prevVisiblePosts + 12);
   };
 
   return (
     <div>
       <Header />
-      <div style={divStyle}>
+      <div style={{ display: 'flex' }}>
         <Sortmenu />
        <FilterButton />
-       </div>
+      </div>
 
-       <div className="recipe-grid">
-       {initialRecipes.slice(0, visibleRecipes).map(recipe => (
+      <div className="recipe-grid">
+      {initialRecipes.slice(0, visiblePosts).map(post => (
           <RecipeCard
-            key={recipe.id}
-            imageUrl={recipe.imageUrl}
-            title={recipe.title}
-            chefName={recipe.chefName}
+            key={post.id}
+            imageUrl={post.imageUrl}
+            title={post.title}
+            chefName={post.chefName}
         />
       ))}
-    </div>
-    {visibleRecipes < initialRecipes.length && (
-        <button onClick={loadMore}>Load More</button>
+      </div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <button
+          onClick={handleLoadMore}
+          disabled={loading || visiblePosts >= posts.length}
+        >
+          {loading ? 'Loading...' : 'Load More'}
+        </button>
       )}
        <footer>  <Footer>
     </Footer></footer>
     </div>
    
-  
-
   )
 }
 
