@@ -1,19 +1,23 @@
+from users.models import CustomAccountManager
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import CustomUserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework import generics
 
 
 class CustomUserCreate(APIView):
     permission_classes = [AllowAny]
 
-    def post(self, request, format='json'):
+    def post(self, request, format="json"):
         serializer = CustomUserSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
+            user.is_active = True
+            user.save()
             if user:
                 json = serializer.data
                 return Response(json, status=status.HTTP_201_CREATED)
@@ -32,3 +36,15 @@ class BlacklistTokenUpdateView(APIView):
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserDeleteView(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, *args, **kwargs):
+        user_id = kwargs.get("pk")
+        if user_id:
+            deleted = CustomAccountManager().delete_user(user_id)
+            if deleted:
+                return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_404_NOT_FOUND)
