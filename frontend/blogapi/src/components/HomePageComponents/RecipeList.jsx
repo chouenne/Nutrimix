@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../../css/RecipeList.css'; 
+import '../../css/RecipeList.css';
 
 const RecipeList = () => {
   const [posts, setPosts] = useState([]);
@@ -22,16 +22,6 @@ const RecipeList = () => {
     fetchPosts();
   }, []);
 
-  const fetchAuthorName = async (authorId) => {
-    try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/users/${authorId}`);
-      return response.data.name; // Assuming the user object has a 'name' property
-    } catch (error) {
-      console.error('Error fetching author name:', error);
-      return 'Unknown Author';
-    }
-  };
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -42,7 +32,7 @@ const RecipeList = () => {
 
   return (
     <div>
-      <h2>Recipes</h2>
+      <h2>Posts</h2>
       <div className="recipe-list">
         {posts.map(post => (
           <div key={post.id} className="recipe-card">
