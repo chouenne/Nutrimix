@@ -5,11 +5,14 @@ from django.conf import settings
 
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
+    category = serializers.StringRelatedField()
+
     class Meta:
         model = Post
         fields = (
             "id",
             "title",
+            "category",
             "author",
             "excerpt",
             "content",
@@ -26,5 +29,5 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = settings.AUTH_USER_MODEL
-        fields = ('email', 'user_name', 'first_name')
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ("email", "user_name", "first_name")
+        extra_kwargs = {"password": {"write_only": True}}

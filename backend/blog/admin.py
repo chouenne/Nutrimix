@@ -7,6 +7,7 @@ class PostAdmin(admin.ModelAdmin):
     list_display = (
         "title",
         "id",
+        "category",
         "status",
         "slug",
         "author",
