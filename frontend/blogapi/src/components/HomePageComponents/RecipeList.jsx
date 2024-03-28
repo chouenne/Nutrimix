@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import '../../css/RecipeList.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import "../../css/RecipeList.css";
 
 const RecipeList = () => {
   const [posts, setPosts] = useState([]);
@@ -10,11 +11,11 @@ const RecipeList = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/');
+        const response = await axios.get("http://127.0.0.1:8000/api/");
         setPosts(response.data);
         setLoading(false);
       } catch (error) {
-        setError('Error fetching posts. Please try again later.');
+        setError("Error fetching posts. Please try again later.");
         setLoading(false);
       }
     };
@@ -32,13 +33,15 @@ const RecipeList = () => {
 
   return (
     <div>
-      <h2>Posts</h2>
+      <h2>Recipe</h2>
       <div className="recipe-list">
-        {posts.map(post => (
+        {posts.map((post) => (
           <div key={post.id} className="recipe-card">
-            {post.image && <img src={post.image} alt={post.title} />}
-            <h3>{post.title}</h3>
-            <p>{post.author}</p>
+            <Link to={`/recipe/${post.id}`}>
+              {post.image && <img src={post.image} alt={post.title} />}
+              <h3>{post.title}</h3>
+              <p>{post.author}</p>
+            </Link>
           </div>
         ))}
       </div>
