@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // Import useParams hook
 import axios from 'axios';
+import "../css/RecipeDetail.css";
 
 const RecipeDetail = () => {
   const { recipeId } = useParams(); // Use useParams hook to access route parameters
