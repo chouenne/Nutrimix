@@ -1,5 +1,12 @@
 Project: NutriMix - Empowering Home Chefs
 
+<<<<<<< HEAD
+Groupe member:
+Xuan;
+Jessica;
+Marna;
+Wei
+=======
 NutriMix is an innovative online recipe platform designed to cater to individuals seeking quick and nutritious meal solutions. With a focus on simplicity and accessibility, our website aims to empower users of all skill levels to create delicious meals in just 5-10 minutes. By providing a collaborative space for sharing, editing, and receiving feedback on recipes, NutriMix revolutionizes the way people approach home cooking, fostering a vibrant community of home chefs.
 
 **Stakeholders:**
@@ -11,3 +18,4 @@ NutriMix is an innovative online recipe platform designed to cater to individual
 **Wei (Backend Developer)**: Leads backend development, responsible for creating efficient APIs for recipe management.
 
 **Myrna (Backend Developer)**: Collaborates with Wei on backend development, focusing on database architecture and API implementation.
+>>>>>>> origin/master
