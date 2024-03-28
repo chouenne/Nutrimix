@@ -8,6 +8,7 @@ class PostAdmin(admin.ModelAdmin):
         "title",
         "id",
         "category",
+        "ingredient",
         "status",
         "slug",
         "author",

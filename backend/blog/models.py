@@ -35,6 +35,7 @@ class Post(models.Model):
     objects = models.Manager()  # default manager
     postobjects = PostObjects()  # custom manager
     image = models.ImageField(upload_to="post_images/", null=True, blank=True)
+    ingredient = models.CharField(max_length=100, null=True)
 
     class Meta:
         ordering = ('-published',)
