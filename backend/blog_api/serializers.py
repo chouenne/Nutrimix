@@ -13,6 +13,7 @@ class PostSerializer(serializers.ModelSerializer):
             "id",
             "title",
             "category",
+            "ingredient",
             "author",
             "excerpt",
             "content",
