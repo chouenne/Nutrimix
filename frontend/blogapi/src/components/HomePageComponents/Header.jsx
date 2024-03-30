@@ -81,7 +81,7 @@ export default function Header() {
         // If needed, you can also decode and set user info here
         // Example: setUser(decodedUserInfo);
         try {
-          const response = await axiosInstance.get('/users/current/'); // 修改为获取当前登录用户信息的端点
+          const response = await axiosInstance.get('/users/users/current/'); // 修改为获取当前登录用户信息的端点
           console.log(response,"response")
           setUser(response.data);
         } catch (error) {
@@ -124,7 +124,7 @@ export default function Header() {
           <div className='flex uppercase font-semibold'>
             {isAuthenticated ? (
               <div className='flex items-center gap-4'>
-                <div className='text-sm flex gap-2'>Hello <p className='underline text-midnight cursor-pointer'>@{user.username}</p></div>
+                <div className='text-sm flex gap-2'>Hello <p className='underline text-midnight cursor-pointer'>@{user.user_name}</p></div>
                 <Button onClick={handleLogout} variant="contained" sx={{ bgcolor: '#f06292', color: 'white', textTransform: 'capitalize' }}>Logout</Button>
               </div>
             ) : (
