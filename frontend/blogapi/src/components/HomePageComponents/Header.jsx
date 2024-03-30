@@ -44,18 +44,49 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+
+// // 登录成功后将用户 ID 存储在本地存储中
+// localStorage.setItem('user_id', response.data.user_id);
+
+// // 获取存储的用户 ID
+// const userId = localStorage.getItem('user_id');
+
+// // 使用存储的用户 ID 来获取用户信息
+// const fetchUserData = async () => {
+//   try {
+//     const response = await axiosInstance.get(`/users/${userId}/`);
+//     setUser(response.data); // 设置用户信息
+//   } catch (error) {
+//     console.error('Failed to fetch user data:', error);
+//   }
+// };
+
+
+
+
+
 export default function Header() {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // user login status
   const [user, setUser] = useState({}); // user info
 
   useEffect(() => {
-    const checkAuthentication = () => {
+    const checkAuthentication = async () => {
       // Check if access token exists in local storage
       const accessToken = localStorage.getItem('access_token');
+      // const userId = localStorage.getItem('user_id');
+
       if (accessToken) {
         setIsAuthenticated(true);
+        // fetchUserData(userId);
         // If needed, you can also decode and set user info here
         // Example: setUser(decodedUserInfo);
+        try {
+          const response = await axiosInstance.get('/users/current/'); // 修改为获取当前登录用户信息的端点
+          console.log(response,"response")
+          setUser(response.data);
+        } catch (error) {
+          console.error('Failed to fetch user data:', error);
+        }
       } else {
         setIsAuthenticated(false);
         setUser({});
@@ -64,6 +95,7 @@ export default function Header() {
 
     // Check authentication on component mount
     checkAuthentication();
+    console.log(isAuthenticated,"isAuthenticated")
   }, []);
 
   const handleLogout = () => {
@@ -72,6 +104,7 @@ export default function Header() {
     setIsAuthenticated(false);
     setUser({});
   };
+  
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -96,8 +129,6 @@ export default function Header() {
               </div>
             ) : (
               <>
-                {/* <Link to='/login'><Button variant="contained" sx={{ bgcolor: '#f06292', color: 'white', textTransform: 'capitalize' }}>Login</Button></Link>
-                <Link to='/register'><Button variant="contained" sx={{ bgcolor: '#f06292', color: 'white', textTransform: 'capitalize' }}>Register</Button></Link> */}
                   <Button
                     href="#"
                     color="primary"

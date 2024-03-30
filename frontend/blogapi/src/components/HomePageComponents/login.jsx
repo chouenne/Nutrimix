@@ -13,36 +13,44 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
 export default function SignIn() {
-    const navigate = useNavigate(); // Use useNavigate to get the navigation function
-    const initialFormData = Object.freeze({
+    const navigate = useNavigate();
+    const initialFormData = {
         email: '',
         password: '',
-    });
-
-    const [formData, updateFormData] = useState(initialFormData);
+    };
+    const [error, setError] = useState(null);
+    const [formData, setFormData] = useState(initialFormData);
 
     const handleChange = (e) => {
-        updateFormData({
+        setFormData({
             ...formData,
             [e.target.name]: e.target.value.trim(),
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
+        setError(null);
 
-        axiosInstance
-            .post(`token/`, {
+        try {
+            const response = await axiosInstance.post(`token/`, {
                 email: formData.email,
                 password: formData.password,
-            })
-            .then((res) => {
-                localStorage.setItem('access_token', res.data.access);
-                localStorage.setItem('refresh_token', res.data.refresh);
-                axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access_token');
-                navigate('/'); // Use navigate for page navigation
             });
+
+            localStorage.setItem('access_token', response.data.access);
+            localStorage.setItem('refresh_token', response.data.refresh);
+            axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access_token');
+
+            // Redirect to home page after successful login
+            navigate('/');
+
+        } catch (error) {
+            setError('Invalid email or password.');
+            console.error('Login failed:', error);
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+        }
     };
 
     return (
