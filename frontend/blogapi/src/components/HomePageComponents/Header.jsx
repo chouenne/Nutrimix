@@ -44,27 +44,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-
-// // 登录成功后将用户 ID 存储在本地存储中
-// localStorage.setItem('user_id', response.data.user_id);
-
-// // 获取存储的用户 ID
-// const userId = localStorage.getItem('user_id');
-
-// // 使用存储的用户 ID 来获取用户信息
-// const fetchUserData = async () => {
-//   try {
-//     const response = await axiosInstance.get(`/users/${userId}/`);
-//     setUser(response.data); // 设置用户信息
-//   } catch (error) {
-//     console.error('Failed to fetch user data:', error);
-//   }
-// };
-
-
-
-
-
 export default function Header() {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // user login status
   const [user, setUser] = useState({}); // user info
@@ -81,7 +60,7 @@ export default function Header() {
         // If needed, you can also decode and set user info here
         // Example: setUser(decodedUserInfo);
         try {
-          const response = await axiosInstance.get('/users/users/current/'); // 修改为获取当前登录用户信息的端点
+          const response = await axiosInstance.get('/users/users/current/');
           console.log(response,"response")
           setUser(response.data);
         } catch (error) {
