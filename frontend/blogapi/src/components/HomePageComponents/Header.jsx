@@ -11,6 +11,11 @@ import logo from '../../assets/images/receipe-logo.svg';
 import axiosInstance from './axios';
 import Button from '@mui/material/Button';
 import { NavLink } from 'react-router-dom';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import { useNavigate } from 'react-router-dom';
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -47,6 +52,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Header() {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // user login status
   const [user, setUser] = useState({}); // user info
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -84,6 +91,16 @@ export default function Header() {
     setUser({});
   };
   
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleProfile = () => {
+    navigate('/profile');
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -103,8 +120,35 @@ export default function Header() {
           <div className='flex uppercase font-semibold'>
             {isAuthenticated ? (
               <div className='flex items-center gap-4'>
-                <div className='text-sm flex gap-2'>Hello <p className='underline text-midnight cursor-pointer'>@{user.user_name}</p></div>
-                <Button onClick={handleLogout} variant="contained" sx={{ bgcolor: '#f06292', color: 'white', textTransform: 'capitalize' }}>Logout</Button>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                  {user.user_name}
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleProfile}>Profile</MenuItem>
+                  <MenuItem onClick={handleLogout} variant="contained" sx={{ bgcolor: '#f06292', color: 'white', textTransform: 'capitalize' }}>Logout</MenuItem>
+                </Menu>
               </div>
             ) : (
               <>
