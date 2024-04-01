@@ -13,10 +13,11 @@ const RecipeList = () => {
         ingredient: "",
         excerpt: "",
         content: "",
-        image: null 
+        image: null
     });
     const [categories, setCategories] = useState([]);
-  
+    const [editingPostId, setEditingPostId] = useState(null);
+
     useEffect(() => {
         const fetchUserPosts = async () => {
             try {
@@ -62,7 +63,6 @@ const RecipeList = () => {
             ...prevState,
             [name]: value
         }));
-        
     };
 
     const handleImageChange = (event) => {
@@ -102,12 +102,56 @@ const RecipeList = () => {
                 ingredient: "",
                 excerpt: "",
                 content: "",
-                image: null 
+                image: null
             });
         } catch (error) {
             console.error('Failed to add post:', error);
         }
         window.location.reload()
+    };
+
+    const handleEdit = (postId) => {
+        setEditingPostId(postId);
+        const postToEdit = posts.find(post => post.id === postId);
+        setNewPost(postToEdit);
+    };
+
+    const handleSaveEdit = async () => {
+        try {
+            const formData = new FormData();
+            formData.append("title", newPost.title);
+            formData.append("category", newPost.category);
+            formData.append("ingredient", newPost.ingredient);
+            formData.append("excerpt", newPost.excerpt);
+            formData.append("content", newPost.content);
+            formData.append("image", newPost.image);
+
+            await axiosInstance.put(`/${editingPostId}/`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `JWT ${localStorage.getItem('access_token')}`
+                }
+            });
+
+            const response = await axiosInstance.get('/users/users/current/', {
+                headers: {
+                    Authorization: `JWT ${localStorage.getItem('access_token')}`
+                }
+            });
+            setPosts(response.data.posts || []);
+            setNewPost({
+                title: "",
+                category: "",
+                ingredient: "",
+                excerpt: "",
+                content: "",
+                image: null
+            });
+            setEditingPostId(null);
+        } catch (error) {
+            console.error('Failed to edit post:', error);
+        }
+        window.location.reload();
     };
 
     if (loading) {
@@ -130,29 +174,30 @@ const RecipeList = () => {
                             <p>{post.author}</p>
                         </Link>
                         <button onClick={() => handleDelete(post.id)}>Delete</button>
+                        <button onClick={() => handleEdit(post.id)}>Edit</button>
                     </div>
                 ))}
             </div>
             <div>
-                <h2>Add New Post</h2>
+                <h2>{editingPostId ? "Edit Post" : "Add New Post"}</h2>
                 <input type="text" name="title" value={newPost.title} onChange={handleChange} placeholder="Title" />
                 <select name="category" value={newPost.category} onChange={handleChange}>
                     <option value="">Select Category</option>
-                    {categories.map((category, index) => {
-                        console.log("Category:", category.name); 
-                        return (
-                            <option key={index} value={category}>{category}</option>
-                        )
-                    })}
+                    {categories.map((category, index) => (
+                        <option key={index} value={category}>{category}</option>
+                    ))}
                 </select>
                 <input type="text" name="ingredient" value={newPost.ingredient} onChange={handleChange} placeholder="Ingredient" />
                 <input type="text" name="excerpt" value={newPost.excerpt} onChange={handleChange} placeholder="Excerpt" />
                 <input type="text" name="content" value={newPost.content} onChange={handleChange} placeholder="Content" />
                 <input type="file" onChange={handleImageChange} />
-                <button onClick={handleAddPost}>Add Post</button>
+                {editingPostId ? (
+                    <button onClick={handleSaveEdit}>Save Edit</button>
+                ) : (
+                    <button onClick={handleAddPost}>Add Post</button>
+                )}
             </div>
             <button onClick={() => window.history.back()}>Back</button>
-
         </div>
     );
 };
