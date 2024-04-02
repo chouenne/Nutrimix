@@ -146,7 +146,18 @@ export default function Header() {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
+                
                   <MenuItem onClick={handleProfile}>Profile</MenuItem>
+                  <MenuItem onClick={handleProfile}><Button
+                    href="#"
+                    color="primary"
+                    variant="outlined"
+                    sx={{ margin: '0 8px' }}
+                    component={NavLink}
+                    to="/ManageAccounts" // 这里是你管理账号页面的路径
+                  >
+                    Manage Accounts
+                  </Button></MenuItem>
                   <MenuItem onClick={handleLogout} variant="contained" sx={{ bgcolor: '#f06292', color: 'white', textTransform: 'capitalize' }}>Logout</MenuItem>
                 </Menu>
               </div>

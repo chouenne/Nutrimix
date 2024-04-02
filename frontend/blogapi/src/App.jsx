@@ -4,6 +4,7 @@ import RecipeDetail from './pages/RecipeDetail'
 import Register from './components/HomePageComponents/register'
 import Login from './components/HomePageComponents/login'
 import UserProfile from './components/HomePageComponents/userProfile';
+import ManageAccounts from './components/HomePageComponents/ManageAccounts';
 
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
         <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<UserProfile />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/manageAccounts" element={<ManageAccounts />} />
 
       </Routes>
     </div>

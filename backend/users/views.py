@@ -7,6 +7,7 @@ from .serializers import CustomUserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import generics
+from .models import NewUser
 
 
 class CustomUserCreate(APIView):
@@ -56,3 +57,9 @@ class CurrentUserView(APIView):
         user = request.user
         serializer = CustomUserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class UserListView(generics.ListAPIView):
+    queryset = NewUser.objects.all()
+    serializer_class = CustomUserSerializer
+    permission_classes = [IsAuthenticated]
