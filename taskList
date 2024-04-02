@@ -1,3 +1,4 @@
+
 Current Task (April 2nd 2024)
 
 TO-DO:
@@ -15,10 +16,6 @@ After adding recipes, direct to the created recipe page.
 
 
 In progress by;
-Wei:
-(Recipe Button)
-Add a recipe button(for logged-in users only on the homepage).
-After adding recipes, direct to the created recipe page.
 
 Jessica:
 (Recipe Details) 
@@ -29,7 +26,17 @@ Xuan:
 and live results are being added on the results page.
 Combine the filter with the results page as a popup.
 
-Myrna;
+
+
+
+
+COMPLETE:
+Wei:(DONE)
+(Recipe Button)
+Add a recipe button(for logged-in users only on the homepage).
+After adding recipes, direct to the created recipe page.
+
+Myrna;(DONE)
 (Project Mang)
 Create a Tasks document
 Upload to GitHub as text doc
