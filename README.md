@@ -4,7 +4,7 @@ Project: NutriMix - Empowering Home Chefs
 Groupe member:
 Xuan;
 Jessica;
-Marna;
+Myrna;
 Wei
 =======
 NutriMix is an innovative online recipe platform designed to cater to individuals seeking quick and nutritious meal solutions. With a focus on simplicity and accessibility, our website aims to empower users of all skill levels to create delicious meals in just 5-10 minutes. By providing a collaborative space for sharing, editing, and receiving feedback on recipes, NutriMix revolutionizes the way people approach home cooking, fostering a vibrant community of home chefs.
