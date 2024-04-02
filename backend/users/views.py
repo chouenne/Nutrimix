@@ -8,10 +8,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import generics
 
-
 class CustomUserCreate(APIView):
     permission_classes = [AllowAny]
-
     def post(self, request, format="json"):
         serializer = CustomUserSerializer(data=request.data)
         if serializer.is_valid():
