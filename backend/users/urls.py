@@ -5,6 +5,7 @@ from .views import (
     UserDeleteView,
     CurrentUserView,
     UserListView,
+    UserDetailView,
 )
 
 app_name = 'users'
@@ -15,4 +16,5 @@ urlpatterns = [
     path("users/<int:pk>/", UserDeleteView.as_view(), name="delete-user"),
     path("users/current/", CurrentUserView.as_view(), name="current-user"),
     path("users/", UserListView.as_view(), name="user-list"),
+    path("users/<str:email>/", UserDetailView.as_view(), name="user-details"),
 ]
