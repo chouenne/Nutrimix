@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import SortMenu from "./SortMenu"; // Import the SortMenu component
 import "../../css/RecipeList.css";
 
 const RecipeList = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -23,6 +25,12 @@ const RecipeList = () => {
     fetchPosts();
   }, []);
 
+  const filteredPosts = selectedCategory === "All" ? posts : posts.filter(post => post.category === selectedCategory);
+
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -34,8 +42,9 @@ const RecipeList = () => {
   return (
     <div>
       <h2>Recipe</h2>
+      <SortMenu onSelectCategory={handleCategorySelect} /> {/* Use the SortMenu component here */}
       <div className="recipe-list">
-        {posts.map((post) => (
+        {filteredPosts.map((post) => (
           <div key={post.id} className="recipe-card">
             <Link to={`/recipe/${post.id}`}>
               {post.image && <img src={post.image} alt={post.title} />}
