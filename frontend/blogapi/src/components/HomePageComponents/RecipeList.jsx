@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import SortMenu from "./SortMenu"; // Import the SortMenu component
+import SortMenu from "./Sortmenu"; // Import the SortMenu component
 import "../../css/RecipeList.css";
 
 const RecipeList = () => {
