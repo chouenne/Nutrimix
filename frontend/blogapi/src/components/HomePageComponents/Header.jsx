@@ -101,6 +101,9 @@ export default function Header() {
   const handleProfile = () => {
     navigate('/profile');
   };
+  const handleProfileadmin = () => {
+    navigate('/ManageAccounts');
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -146,7 +149,18 @@ export default function Header() {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
+                
                   <MenuItem onClick={handleProfile}>Profile</MenuItem>
+                  {user.is_superuser && (
+                    <MenuItem onClick={handleProfileadmin}>
+                      <NavLink
+                        to="/ManageAccounts"
+                        style={{ textDecoration: 'none', color: 'inherit' }} // Apply styles here
+                      >
+                        Manage Accounts
+                      </NavLink>
+                    </MenuItem>
+                  )}
                   <MenuItem onClick={handleLogout} variant="contained" sx={{ bgcolor: '#f06292', color: 'white', textTransform: 'capitalize' }}>Logout</MenuItem>
                 </Menu>
               </div>
