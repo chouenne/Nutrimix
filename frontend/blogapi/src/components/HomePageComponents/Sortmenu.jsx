@@ -2,9 +2,9 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
-const categories = ['Main Courses', 'Salads', 'Desserts', 'Snacks']; 
+const categories = ['All', 'Main Courses', 'Salads', 'Desserts', 'Snacks']; 
 
-export default function SortMenu({ onSelectCategory }) {
+export default function Sortmenu({ onSelectCategory }) {
 
   const handleCategoryClick = (category) => {
     onSelectCategory(category);
