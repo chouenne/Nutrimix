@@ -101,6 +101,9 @@ export default function Header() {
   const handleProfile = () => {
     navigate('/profile');
   };
+  const handleProfileadmin = () => {
+    navigate('/ManageAccounts');
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -149,17 +152,13 @@ export default function Header() {
                 
                   <MenuItem onClick={handleProfile}>Profile</MenuItem>
                   {user.is_superuser && (
-                    <MenuItem onClick={handleProfile}>
-                      <Button
-                        href="#"
-                        color="primary"
-                        variant="outlined"
-                        sx={{ margin: '0 8px' }}
-                        component={NavLink}
-                        to="/ManageAccounts" // 这里是你管理账号页面的路径
+                    <MenuItem onClick={handleProfileadmin}>
+                      <NavLink
+                        to="/ManageAccounts"
+                        style={{ textDecoration: 'none', color: 'inherit' }} // Apply styles here
                       >
                         Manage Accounts
-                      </Button>
+                      </NavLink>
                     </MenuItem>
                   )}
                   <MenuItem onClick={handleLogout} variant="contained" sx={{ bgcolor: '#f06292', color: 'white', textTransform: 'capitalize' }}>Logout</MenuItem>

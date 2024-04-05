@@ -34,14 +34,18 @@ const RecipeList = () => {
             }
         };
 
-        fetchUserPosts();
-    }, []);
+        const fetchCategories = async () => {
+            try {
+                const response = await axiosInstance.get('/category/');
+                setCategories(response.data || []);
+            } catch (error) {
+                console.error('Failed to fetch categories:', error);
+            }
+        };
 
-    // Extract unique categories from posts
-    useEffect(() => {
-        const uniqueCategories = [...new Set(posts.map(post => post.category))];
-        setCategories(uniqueCategories);
-    }, [posts]);
+        fetchUserPosts();
+        fetchCategories();
+    }, []);
 
     const handleDelete = async (postId) => {
         try {
@@ -183,8 +187,8 @@ const RecipeList = () => {
                 <input type="text" name="title" value={newPost.title} onChange={handleChange} placeholder="Title" />
                 <select name="category" value={newPost.category} onChange={handleChange}>
                     <option value="">Select Category</option>
-                    {categories.map((category, index) => (
-                        <option key={index} value={category}>{category}</option>
+                    {categories.map((category) => (
+                        <option key={category.id} value={category.name}>{category.name}</option>
                     ))}
                 </select>
                 <input type="text" name="ingredient" value={newPost.ingredient} onChange={handleChange} placeholder="Ingredient" />

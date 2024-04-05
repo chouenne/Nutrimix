@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from './axios';
+import { useNavigate } from 'react-router-dom';
 
 const deleteUserByEmail = async (email, setUsers) => {
+    
     try {
         const response = await axiosInstance.get(`/users/users/${email}/`);
-        const userId = response.data.id; // 获取用户的 ID
+        const userId = response.data.id;
 
         const token = localStorage.getItem('access_token');
         await axiosInstance.delete(`/users/users/${userId}/`, {
@@ -19,8 +21,10 @@ const deleteUserByEmail = async (email, setUsers) => {
     }
 };
 
+
 function ManageAccounts() {
     const [users, setUsers] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -35,9 +39,15 @@ function ManageAccounts() {
         fetchUsers();
     }, [setUsers]);
 
+    const handleBack = () => {
+        navigate("/");
+    };
+
     return (
         <div>
             <h2>User List</h2>
+            <button onClick={handleBack}>Back</button>
+
             <ul>
                 {users.map(user => (
                     <li key={user.email}>
