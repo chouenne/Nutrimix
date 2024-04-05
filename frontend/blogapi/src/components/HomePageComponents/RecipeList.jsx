@@ -42,7 +42,7 @@ const RecipeList = () => {
   return (
     <div>
       <h2>Recipe</h2>
-      <SortMenu onSelectCategory={handleCategorySelect} /> {/* Use the SortMenu component here */}
+      <SortMenu onSelectCategory={handleCategorySelect} />
       <div className="recipe-list">
         {filteredPosts.map((post) => (
           <div key={post.id} className="recipe-card">
