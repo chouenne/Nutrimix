@@ -22,10 +22,19 @@ const RecipeList = () => {
       }
     };
 
+    // 从本地存储中加载上次选定的分类
+    const selectedCategoryFromLocalStorage = localStorage.getItem("selectedCategory");
+    if (selectedCategoryFromLocalStorage) {
+      setSelectedCategory(selectedCategoryFromLocalStorage);
+    }
+
     fetchPosts();
   }, []);
 
-  const filteredPosts = selectedCategory === "All" ? posts : posts.filter(post => post.category === selectedCategory);
+  useEffect(() => {
+    // 每次 selectedCategory 变化时更新本地存储
+    localStorage.setItem("selectedCategory", selectedCategory);
+  }, [selectedCategory]);
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
@@ -38,6 +47,8 @@ const RecipeList = () => {
   if (error) {
     return <div>{error}</div>;
   }
+
+  const filteredPosts = selectedCategory === "All" ? posts : posts.filter(post => post.category === selectedCategory);
 
   return (
     <div>

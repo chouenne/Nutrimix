@@ -9,7 +9,7 @@ const RecipeList = () => {
     const [error, setError] = useState(null);
     const [newPost, setNewPost] = useState({
         title: "",
-        category: "",
+        category: "", // Change to store category name instead of ID
         ingredient: "",
         excerpt: "",
         content: "",
@@ -34,14 +34,19 @@ const RecipeList = () => {
             }
         };
 
-        fetchUserPosts();
-    }, []);
+        const fetchCategories = async () => { // Fetch categories from API
+            try {
+                const response = await axiosInstance.get('/category/');
+                console.log(response,"aa")
+                setCategories(response.data || []);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
 
-    // Extract unique categories from posts
-    useEffect(() => {
-        const uniqueCategories = [...new Set(posts.map(post => post.category))];
-        setCategories(uniqueCategories);
-    }, [posts]);
+        fetchUserPosts();
+        fetchCategories(); // Call the function to fetch categories
+    }, []);
 
     const handleDelete = async (postId) => {
         try {
@@ -59,9 +64,13 @@ const RecipeList = () => {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
+        // If the target field is "category", find the corresponding category ID
+        const categoryId = categories.find(category => category.name === value)?.id || "";
+        console.log(categoryId,"categoryId")
+        // Update the newPost state with the category ID
         setNewPost(prevState => ({
             ...prevState,
-            [name]: value
+            [name]: name === "category" ? categoryId : value
         }));
     };
 
@@ -183,8 +192,8 @@ const RecipeList = () => {
                 <input type="text" name="title" value={newPost.title} onChange={handleChange} placeholder="Title" />
                 <select name="category" value={newPost.category} onChange={handleChange}>
                     <option value="">Select Category</option>
-                    {categories.map((category, index) => (
-                        <option key={index} value={category}>{category}</option>
+                    {categories.map((category, index) => ( // Render categories from state
+                        <option key={index} value={category.name}>{category.name}</option>
                     ))}
                 </select>
                 <input type="text" name="ingredient" value={newPost.ingredient} onChange={handleChange} placeholder="Ingredient" />

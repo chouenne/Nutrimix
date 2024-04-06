@@ -4,7 +4,7 @@ import axiosInstance from './axios';
 const deleteUserByEmail = async (email, setUsers) => {
     try {
         const response = await axiosInstance.get(`/users/users/${email}/`);
-        const userId = response.data.id; // 获取用户的 ID
+        const userId = response.data.id;
 
         const token = localStorage.getItem('access_token');
         await axiosInstance.delete(`/users/users/${userId}/`, {
