@@ -11,7 +11,6 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
-    # 将 category 字段从只读字段更改为可写字段
     category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
 
     class Meta:

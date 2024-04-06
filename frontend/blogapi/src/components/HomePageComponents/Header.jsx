@@ -63,9 +63,7 @@ export default function Header() {
 
       if (accessToken) {
         setIsAuthenticated(true);
-        // fetchUserData(userId);
-        // If needed, you can also decode and set user info here
-        // Example: setUser(decodedUserInfo);
+
         try {
           const response = await axiosInstance.get('/users/users/current/');
           console.log(response,"response")
@@ -105,9 +103,7 @@ export default function Header() {
     navigate('/ManageAccounts');
   };
 
-  const handleProfileadmin = () => {
-    navigate('/ManageAccounts');
-  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ backgroundColor: '#DFE0DE', boxShadow: 'none' }}>
@@ -161,11 +157,7 @@ export default function Header() {
                         style={{ textDecoration: 'none', color: 'inherit' }} // Apply styles here
                       >
                         Manage Accounts
-<<<<<<< HEAD
                       </NavLink>
-=======
-                    </NavLink>
->>>>>>> wei
                     </MenuItem>
                   )}
                   <MenuItem onClick={handleLogout} variant="contained" sx={{ bgcolor: '#f06292', color: 'white', textTransform: 'capitalize' }}>Logout</MenuItem>

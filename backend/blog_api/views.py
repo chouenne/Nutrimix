@@ -41,7 +41,6 @@ class PostList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         # serializer.save(author=self.request.user)
-        # 从请求数据中获取分类字段并保存
         category_id = self.request.data.get("category", None)
         serializer.save(author=self.request.user, category_id=category_id)
 

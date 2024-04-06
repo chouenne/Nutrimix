@@ -34,31 +34,17 @@ const RecipeList = () => {
             }
         };
 
-<<<<<<< HEAD
-        const fetchCategories = async () => {
-            try {
-                const response = await axiosInstance.get('/category/');
-                setCategories(response.data || []);
-            } catch (error) {
-                console.error('Failed to fetch categories:', error);
-=======
         const fetchCategories = async () => { // Fetch categories from API
             try {
-                const response = await axiosInstance.get('/category/');
-                console.log(response,"aa")
+                const response = await axiosInstance.get('http://127.0.0.1:8000/api/category/');
                 setCategories(response.data || []);
             } catch (error) {
                 console.error('Error fetching categories:', error);
->>>>>>> wei
             }
         };
 
         fetchUserPosts();
-<<<<<<< HEAD
-        fetchCategories();
-=======
         fetchCategories(); // Call the function to fetch categories
->>>>>>> wei
     }, []);
 
     const handleDelete = async (postId) => {
@@ -77,13 +63,9 @@ const RecipeList = () => {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        // If the target field is "category", find the corresponding category ID
-        const categoryId = categories.find(category => category.name === value)?.id || "";
-        console.log(categoryId,"categoryId")
-        // Update the newPost state with the category ID
         setNewPost(prevState => ({
             ...prevState,
-            [name]: name === "category" ? categoryId : value
+            [name]: value
         }));
     };
 
@@ -205,13 +187,8 @@ const RecipeList = () => {
                 <input type="text" name="title" value={newPost.title} onChange={handleChange} placeholder="Title" />
                 <select name="category" value={newPost.category} onChange={handleChange}>
                     <option value="">Select Category</option>
-<<<<<<< HEAD
-                    {categories.map((category) => (
-                        <option key={category.id} value={category.name}>{category.name}</option>
-=======
                     {categories.map((category, index) => ( // Render categories from state
                         <option key={index} value={category.name}>{category.name}</option>
->>>>>>> wei
                     ))}
                 </select>
                 <input type="text" name="ingredient" value={newPost.ingredient} onChange={handleChange} placeholder="Ingredient" />

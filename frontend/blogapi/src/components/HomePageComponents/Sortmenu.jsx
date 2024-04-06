@@ -10,11 +10,7 @@ export default function Sortmenu({ onSelectCategory }) {
     const fetchCategories = async () => {
       try {
         const response = await axios.get('http://127.0.0.1:8000/api/category/');
-<<<<<<< HEAD
-        setCategories(['All', ...response.data.map(category => category.name)]);
-=======
         setCategories([{ id: null, name: 'All' }, ...response.data]);
->>>>>>> wei
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
@@ -23,7 +19,6 @@ export default function Sortmenu({ onSelectCategory }) {
     fetchCategories();
   }, []);
 
-
   const handleCategoryClick = (categoryId) => {
     onSelectCategory(categoryId);
   };
@@ -31,13 +26,8 @@ export default function Sortmenu({ onSelectCategory }) {
   return (
     <ButtonGroup variant="text" color="primary" aria-label="Sort by">
       {categories.map((category, index) => (
-<<<<<<< HEAD
-        <Button key={index} onClick={() => handleCategoryClick(category)}>
-          {category}
-=======
         <Button key={index} onClick={() => handleCategoryClick(category.id)}>
           {category.name}
->>>>>>> wei
         </Button>
       ))}
     </ButtonGroup>
