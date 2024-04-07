@@ -16,7 +16,6 @@ import MenuItem from '@mui/material/MenuItem';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom';
 
-
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: '50px',
@@ -49,7 +48,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Header() {
+export default function Header({ setSearchQuery }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // user login status
   const [user, setUser] = useState({}); // user info
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -59,16 +58,11 @@ export default function Header() {
     const checkAuthentication = async () => {
       // Check if access token exists in local storage
       const accessToken = localStorage.getItem('access_token');
-      // const userId = localStorage.getItem('user_id');
 
       if (accessToken) {
         setIsAuthenticated(true);
-        // fetchUserData(userId);
-        // If needed, you can also decode and set user info here
-        // Example: setUser(decodedUserInfo);
         try {
           const response = await axiosInstance.get('/users/users/current/');
-          console.log(response,"response")
           setUser(response.data);
         } catch (error) {
           console.error('Failed to fetch user data:', error);
@@ -81,7 +75,6 @@ export default function Header() {
 
     // Check authentication on component mount
     checkAuthentication();
-    console.log(isAuthenticated,"isAuthenticated")
   }, []);
 
   const handleLogout = () => {
@@ -101,8 +94,9 @@ export default function Header() {
   const handleProfile = () => {
     navigate('/profile');
   };
-  const handleProfileadmin = () => {
-    navigate('/ManageAccounts');
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value); // Update search query
   };
 
   return (
@@ -117,7 +111,7 @@ export default function Header() {
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
-            <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
+            <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} onChange={handleSearchChange} />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <div className='flex uppercase font-semibold'>
@@ -149,18 +143,7 @@ export default function Header() {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                
                   <MenuItem onClick={handleProfile}>Profile</MenuItem>
-                  {user.is_superuser && (
-                    <MenuItem onClick={handleProfileadmin}>
-                      <NavLink
-                        to="/ManageAccounts"
-                        style={{ textDecoration: 'none', color: 'inherit' }} // Apply styles here
-                      >
-                        Manage Accounts
-                      </NavLink>
-                    </MenuItem>
-                  )}
                   <MenuItem onClick={handleLogout} variant="contained" sx={{ bgcolor: '#f06292', color: 'white', textTransform: 'capitalize' }}>Logout</MenuItem>
                 </Menu>
               </div>

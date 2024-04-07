@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import SortMenu from "./Sortmenu"; // Import the SortMenu component
 import "../../css/RecipeList.css";
 
-const RecipeList = () => {
+const RecipeList = ({ searchQuery }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -25,7 +25,28 @@ const RecipeList = () => {
     fetchPosts();
   }, []);
 
-  const filteredPosts = selectedCategory === "All" ? posts : posts.filter(post => post.category === selectedCategory);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/");
+        setPosts(response.data);
+        setLoading(false);
+      } catch (error) {
+        setError("Error fetching posts. Please try again later.");
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, [searchQuery]); // Re-fetch posts whenever searchQuery changes
+
+  const filteredPosts = posts.filter(post => {
+    if (searchQuery && searchQuery.trim() !== "") {
+      return post.title.toLowerCase().includes(searchQuery.toLowerCase());
+    } else {
+      return true; // Include all posts if searchQuery is not provided or empty
+    }
+  }).filter(post => selectedCategory === "All" || post.category === selectedCategory);
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
