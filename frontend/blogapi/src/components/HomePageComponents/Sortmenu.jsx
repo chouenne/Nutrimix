@@ -20,7 +20,7 @@ export default function Sortmenu({ onSelectCategory }) {
   }, []);
 
   const handleCategoryClick = (categoryId) => {
-    onSelectCategory(categoryId);
+    onSelectCategory(categoryId === null ? 'All' : categoryId);
   };
 
   return (
