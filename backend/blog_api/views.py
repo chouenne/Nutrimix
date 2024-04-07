@@ -1,6 +1,12 @@
 from rest_framework import generics
-from blog.models import Post, Category
-from .serializers import PostSerializer, CategorySerializer
+from blog.models import Bookmark, Like, Post, Category, Comment
+from .serializers import (
+    BookmarkSerializer,
+    CommentSerializer,
+    LikeSerializer,
+    PostSerializer,
+    CategorySerializer,
+)
 from rest_framework.permissions import (
     SAFE_METHODS,
     IsAuthenticated,
@@ -56,3 +62,36 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView, PostUserWritePermission)
     permission_classes = [PostUserWritePermission]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+
+class CommentListCreate(generics.ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+    def get_queryset(self):
+        post_id = self.kwargs.get("pk")
+        return Comment.objects.filter(post_id=post_id)
+
+
+# 点赞
+class LikeCreateDestroy(generics.CreateAPIView, generics.DestroyAPIView):
+    queryset = Like.objects.all()
+    serializer_class = LikeSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+# 评论
+class BookmarkCreateDestroy(generics.CreateAPIView, generics.DestroyAPIView):
+    queryset = Bookmark.objects.all()
+    serializer_class = BookmarkSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
