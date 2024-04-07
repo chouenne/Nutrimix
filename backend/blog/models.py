@@ -21,8 +21,7 @@ class Post(models.Model):
         ('published', 'Published'),
     )
 
-    category = models.ForeignKey(
-        Category, on_delete=models.PROTECT, default=1)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, null=True)
     title = models.CharField(max_length=250)
     excerpt = models.TextField(null=True)
     content = models.TextField()
