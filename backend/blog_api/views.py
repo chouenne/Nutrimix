@@ -18,6 +18,9 @@ from rest_framework.permissions import (
 )
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.generics import CreateAPIView, DestroyAPIView
 
 class PostUserWritePermission(BasePermission):
     message = "Editing posts is restricted to the author only."
@@ -63,11 +66,11 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView, PostUserWritePermission)
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-
+# 评论
 class CommentListCreate(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -78,16 +81,24 @@ class CommentListCreate(generics.ListCreateAPIView):
 
 
 # 点赞
-class LikeCreateDestroy(generics.CreateAPIView, generics.DestroyAPIView):
+# class LikeCreateDestroy(generics.CreateAPIView, generics.DestroyAPIView):
+class LikeCreateDestroy(CreateAPIView, DestroyAPIView):
     queryset = Like.objects.all()
     serializer_class = LikeSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        user = self.request.user
+        if user.is_authenticated:
+            # 如果用户已登录，则将点赞与该用户关联
+            serializer.save(user=user)
+        else:
+            # 如果用户未登录，则将点赞与 AnonymousUser 关联
+            serializer.save(user=None)
+            
 
 
-# 评论
+# 收藏
 class BookmarkCreateDestroy(generics.CreateAPIView, generics.DestroyAPIView):
     queryset = Bookmark.objects.all()
     serializer_class = BookmarkSerializer

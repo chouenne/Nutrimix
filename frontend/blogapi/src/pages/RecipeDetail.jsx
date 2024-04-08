@@ -19,7 +19,6 @@ const RecipeDetail = () => {
       try {
         const response = await axios.get(`http://127.0.0.1:8000/api/${recipeId}/`);
         setPost(response.data);
-        setComments(response.data.comments);
         setLikes(response.data.likes);
         setIsLiked(response.data.isLiked);
         setIsBookmarked(response.data.isBookmarked);
@@ -31,10 +30,20 @@ const RecipeDetail = () => {
     };
 
     fetchPost();
+
+    const fetchComments = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/posts/${recipeId}/comments/`);
+        setComments(response.data);
+      } catch (error) {
+        console.error('Error fetching comments:', error);
+      }
+    };
+
+    fetchComments();
   }, [recipeId]);
 
   const handleCommentChange = (e) => {
-    // console.log(e.target.value, "comment value");
     setComment(e.target.value);
   };
 
@@ -44,7 +53,7 @@ const RecipeDetail = () => {
       // console.log(accessToken,"accessToken")
       if (!accessToken) {
         console.error('Access token not found in local storage.');
-        return; // 或者进行一些适当的处理
+        return; 
       }
       const config = {
         headers: {
@@ -116,7 +125,7 @@ const RecipeDetail = () => {
       {/* Display comments */}
       <h3>Comments:</h3>
       <ul>
-        {comments && comments.map((comment, index) => (
+        {comments.map((comment, index) => (
           <li key={index}>{comment.content}</li>
         ))}
       </ul>
