@@ -2,6 +2,7 @@ from tokenize import Comment
 from rest_framework import serializers
 from blog.models import Bookmark, Like, Post, Category
 from django.conf import settings
+from blog.models import Comment
 
 
 class CategorySerializer(serializers.ModelSerializer):

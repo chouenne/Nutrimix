@@ -34,23 +34,32 @@ const RecipeDetail = () => {
   }, [recipeId]);
 
   const handleCommentChange = (e) => {
-    console.log(e.target.value, "comment value");
+    // console.log(e.target.value, "comment value");
     setComment(e.target.value);
   };
 
   const handleSubmitComment = async () => {
     try {
       const accessToken = localStorage.getItem('access_token');
+      // console.log(accessToken,"accessToken")
+      if (!accessToken) {
+        console.error('Access token not found in local storage.');
+        return; // 或者进行一些适当的处理
+      }
       const config = {
         headers: {
-          'Authorization': `Bearer ${accessToken}`,
+          'Authorization': `JWT ${localStorage.getItem('access_token')}`,
         }
       };
 
-
-      const response = await axios.post(`http://127.0.0.1:8000/api/${recipeId}/comments/`, { text: comment });
-      console.log(response,"ddd")
-      setComments([...comments, response.data]);
+      const response = await axios.post(`http://127.0.0.1:8000/api/posts/${recipeId}/comments/`, { post: recipeId, content: comment }, config);
+      console.log(response, "ddd");
+      setComments(prevComments => {
+        if (!Array.isArray(prevComments)) {
+          return [response.data];
+        }
+        return [...prevComments, response.data];
+      });
       setComment('');
     } catch (error) {
       console.error('Error submitting comment:', error);
@@ -108,7 +117,7 @@ const RecipeDetail = () => {
       <h3>Comments:</h3>
       <ul>
         {comments && comments.map((comment, index) => (
-          <li key={index}>{comment.text}</li>
+          <li key={index}>{comment.content}</li>
         ))}
       </ul>
 
