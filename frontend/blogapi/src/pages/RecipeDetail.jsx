@@ -10,7 +10,7 @@ const RecipeDetail = () => {
   const [error, setError] = useState(null);
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
-  const [likes, setLikes] = useState(0);
+  const [likes, setLikes] = useState(1);
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
@@ -18,6 +18,7 @@ const RecipeDetail = () => {
     const fetchPost = async () => {
       try {
         const response = await axios.get(`http://127.0.0.1:8000/api/${recipeId}/`);
+        console.log(response,"dd")
         setPost(response.data);
         setLikes(response.data.likes);
         setIsLiked(response.data.isLiked);
@@ -34,6 +35,7 @@ const RecipeDetail = () => {
     const fetchComments = async () => {
       try {
         const response = await axios.get(`http://127.0.0.1:8000/api/posts/${recipeId}/comments/`);
+        console.log(response,"gg")
         setComments(response.data);
       } catch (error) {
         console.error('Error fetching comments:', error);
@@ -77,14 +79,19 @@ const RecipeDetail = () => {
 
   const handleLike = async () => {
     try {
-      if (!isLiked) {
-        await axios.post(`http://127.0.0.1:8000/api/${recipeId}/like/`);
-        setLikes(likes + 1);
-        setIsLiked(true);
+      // 调用获取赞的 API
+      const response = await axios.get(`http://127.0.0.1:8000/api/posts/${recipeId}/likes/`);
+      const { likes_count, is_liked } = response.data;
+
+      // 更新点赞数量和状态
+      setLikes(likes_count);
+      setIsLiked(is_liked);
+
+      // 根据用户是否已经点赞来调用创建或删除赞的 API
+      if (!is_liked) {
+        await axios.post(`http://127.0.0.1:8000/api/posts/${recipeId}/like/`, { post: recipeId });
       } else {
-        await axios.delete(`http://127.0.0.1:8000/api/${recipeId}/like/`);
-        setLikes(likes - 1);
-        setIsLiked(false);
+        await axios.delete(`http://127.0.0.1:8000/api/posts/${recipeId}/like/`);
       }
     } catch (error) {
       console.error('Error toggling like:', error);
@@ -93,11 +100,22 @@ const RecipeDetail = () => {
 
   const handleBookmark = async () => {
     try {
+      const accessToken = localStorage.getItem('access_token');
+      if (!accessToken) {
+        console.error('Access token not found in local storage.');
+        return;
+      }
+      const config = {
+        headers: {
+          'Authorization': `JWT ${accessToken}`,
+        }
+      };
+
       if (!isBookmarked) {
-        await axios.post(`http://127.0.0.1:8000/api/${recipeId}/bookmark/`);
+        await axios.post(`http://127.0.0.1:8000/api/posts/${recipeId}/bookmark/`, null, config);
         setIsBookmarked(true);
       } else {
-        await axios.delete(`http://127.0.0.1:8000/api/${recipeId}/bookmark/`);
+        await axios.delete(`http://127.0.0.1:8000/api/posts/${recipeId}/bookmark/`, config);
         setIsBookmarked(false);
       }
     } catch (error) {

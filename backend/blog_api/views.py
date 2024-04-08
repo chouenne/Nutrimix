@@ -1,4 +1,5 @@
 from rest_framework import generics
+from rest_framework.views import APIView
 from blog.models import Bookmark, Like, Post, Category, Comment
 from .serializers import (
     BookmarkSerializer,
@@ -82,6 +83,17 @@ class CommentListCreate(generics.ListCreateAPIView):
 
 # 点赞
 # class LikeCreateDestroy(generics.CreateAPIView, generics.DestroyAPIView):
+class PostLikesView(APIView):
+    def get(self, request, post_id):
+        post = Post.objects.get(pk=post_id)
+        likes_count = post.likes.count()  # 获取点赞数量
+        user = request.user
+        is_liked = False
+        if user.is_authenticated:
+            is_liked = post.likes.filter(user=user).exists()  # 检查当前用户是否已经点赞
+        return Response({"likes_count": likes_count, "is_liked": is_liked})
+
+
 class LikeCreateDestroy(CreateAPIView, DestroyAPIView):
     queryset = Like.objects.all()
     serializer_class = LikeSerializer
@@ -95,7 +107,6 @@ class LikeCreateDestroy(CreateAPIView, DestroyAPIView):
         else:
             # 如果用户未登录，则将点赞与 AnonymousUser 关联
             serializer.save(user=None)
-            
 
 
 # 收藏
