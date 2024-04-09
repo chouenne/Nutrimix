@@ -14,7 +14,7 @@ http://127.0.0.1:8000/api/posts/1/comments/  post
     "content": "Your comment content here",
     "created_at": "2024-04-07T18:04:17.633933Z"
 }
-
+///////////////////////////////////////////////////////////////////////////////
 点赞api
 http://127.0.0.1:8000/api/posts/13/likes/  GET 获取数据
 需要被传值的数据{
@@ -34,3 +34,22 @@ http://127.0.0.1:8000/api/posts/13/like/   POST  添加
 }
 
 http://127.0.0.1:8000/api/posts/13/like/   Delete  删除
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+收藏
+http://127.0.0.1:8000/api/posts/13/bookmarks/  GET
+返回的数据
+{
+    "bookmarks_count": 0,
+    "is_bookmarked": false
+}
+
+http://127.0.0.1:8000/api/posts/13/bookmark/  POST 增加
+
+
+
+http://127.0.0.1:8000/api/posts/13/bookmark/  POST  收藏成功
+{
+    "message": "Bookmark already exists."
+}

@@ -110,10 +110,37 @@ class LikeCreateDestroy(CreateAPIView, DestroyAPIView):
 
 
 # 收藏
-class BookmarkCreateDestroy(generics.CreateAPIView, generics.DestroyAPIView):
-    queryset = Bookmark.objects.all()
-    serializer_class = BookmarkSerializer
+class PostBookmarksView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    def get(self, request, post_id):
+        bookmarks_count = Bookmark.objects.filter(
+            post_id=post_id
+        ).count()  # 获取收藏数量
+        user = request.user
+        is_bookmarked = Bookmark.objects.filter(
+            post_id=post_id, user=user
+        ).exists()  # 检查当前用户是否已经收藏
+        return Response(
+            {"bookmarks_count": bookmarks_count, "is_bookmarked": is_bookmarked}
+        )
+
+
+# 收藏创建和删除
+class BookmarkCreateDestroy(generics.CreateAPIView, generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, post_id):
+        user = request.user
+        if not Bookmark.objects.filter(post_id=post_id, user=user).exists():
+            Bookmark.objects.create(post_id=post_id, user=user)
+            return Response({"message": "Bookmark created successfully."}, status=201)
+        return Response({"message": "Bookmark already exists."}, status=200)
+
+    def delete(self, request, post_id):
+        user = request.user
+        bookmark = Bookmark.objects.filter(post_id=post_id, user=user)
+        if bookmark.exists():
+            bookmark.delete()
+            return Response(status=204)
+        return Response(status=404)

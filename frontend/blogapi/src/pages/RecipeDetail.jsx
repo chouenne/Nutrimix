@@ -111,6 +111,7 @@ const RecipeDetail = () => {
         }
       };
 
+      // 根据用户是否已经收藏来调用创建或删除收藏的 API
       if (!isBookmarked) {
         await axios.post(`http://127.0.0.1:8000/api/posts/${recipeId}/bookmark/`, null, config);
         setIsBookmarked(true);

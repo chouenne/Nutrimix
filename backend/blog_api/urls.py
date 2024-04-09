@@ -3,6 +3,7 @@ from .views import (
     BookmarkCreateDestroy,
     CommentListCreate,
     LikeCreateDestroy,
+    PostBookmarksView,
     PostLikesView,
     PostList,
     PostDetail,
@@ -31,7 +32,12 @@ urlpatterns = [
     ),
     path("posts/<int:post_id>/likes/", PostLikesView.as_view(), name="post-likes"),
     path(
-        "posts/<int:pk>/bookmark/",
+        "posts/<int:post_id>/bookmarks/",
+        PostBookmarksView.as_view(),
+        name="post-bookmarks-view",
+    ),
+    path(
+        "posts/<int:post_id>/bookmark/",
         BookmarkCreateDestroy.as_view(),
         name="bookmark-create-destroy",
     ),
