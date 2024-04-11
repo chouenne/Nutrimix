@@ -83,11 +83,11 @@ class CommentListCreate(generics.ListCreateAPIView):
 class PostLikesView(APIView):
     def get(self, request, post_id):
         post = Post.objects.get(pk=post_id)
-        likes_count = post.likes.count()  # 获取点赞数量
+        likes_count = post.likes.count() 
         user = request.user
         is_liked = False
         if user.is_authenticated:
-            is_liked = post.likes.filter(user=user).exists()  # 检查当前用户是否已经点赞
+            is_liked = post.likes.filter(user=user).exists()
         return Response({"likes_count": likes_count, "is_liked": is_liked})
 
 

@@ -42,7 +42,6 @@ class Post(models.Model):
         return self.title
 
 
-# 评论
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -56,7 +55,6 @@ class Comment(models.Model):
         return f"Comment by {self.author.username} on {self.post.title}"
 
 
-# 点赞
 class Like(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="likes")
     # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -70,7 +68,6 @@ class Like(models.Model):
         return f"{self.user.username} likes {self.post.title}"
 
 
-# 收藏
 class Bookmark(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="bookmarks")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
