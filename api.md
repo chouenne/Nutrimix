@@ -1,12 +1,12 @@
 
-评论api
+comments api
 http://127.0.0.1:8000/api/posts/1/comments/  get
 http://127.0.0.1:8000/api/posts/1/comments/  post 
-需要传值的数据{
-    "post": id值,
+require data{
+    "post": id,
     "content": "Your comment content here"
 }
-被添加的值
+get data from api for postman test
 {
     "id": 1,
     "post": 3,
@@ -15,41 +15,41 @@ http://127.0.0.1:8000/api/posts/1/comments/  post
     "created_at": "2024-04-07T18:04:17.633933Z"
 }
 ///////////////////////////////////////////////////////////////////////////////
-点赞api
-http://127.0.0.1:8000/api/posts/13/likes/  GET 获取数据
-需要被传值的数据{
+like api
+http://127.0.0.1:8000/api/posts/13/likes/  GET 
+retrun data{
     "likes_count": 3,
     "is_liked": false
 }
 
-http://127.0.0.1:8000/api/posts/13/like/   POST  添加
-需要被传值的数据{
+http://127.0.0.1:8000/api/posts/13/like/   POST  create
+require data{
     "post": 13
 }
-获取的数据{
+get data from api for postman test{
     "id": 8,
     "post": 13,
     "user": null,
     "created_at": "2024-04-08T23:29:23.629028Z"
 }
 
-http://127.0.0.1:8000/api/posts/13/like/   Delete  删除
+http://127.0.0.1:8000/api/posts/13/like/   Delete  
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
 收藏
 http://127.0.0.1:8000/api/posts/13/bookmarks/  GET
-返回的数据
+retrun data from postman (test)
 {
     "bookmarks_count": 0,
     "is_bookmarked": false
 }
 
-http://127.0.0.1:8000/api/posts/13/bookmark/  POST 增加
+http://127.0.0.1:8000/api/posts/13/bookmark/  POST create
 
 
 
-http://127.0.0.1:8000/api/posts/13/bookmark/  POST  收藏成功
+http://127.0.0.1:8000/api/posts/13/bookmark/  POST  
 {
     "message": "Bookmark already exists."
 }
