@@ -79,15 +79,12 @@ const RecipeDetail = () => {
 
   const handleLike = async () => {
     try {
-      // 调用获取赞的 API
       const response = await axios.get(`http://127.0.0.1:8000/api/posts/${recipeId}/likes/`);
       const { likes_count, is_liked } = response.data;
 
-      // 更新点赞数量和状态
       setLikes(likes_count);
       setIsLiked(is_liked);
 
-      // 根据用户是否已经点赞来调用创建或删除赞的 API
       if (!is_liked) {
         await axios.post(`http://127.0.0.1:8000/api/posts/${recipeId}/like/`, { post: recipeId });
       } else {
@@ -111,7 +108,6 @@ const RecipeDetail = () => {
         }
       };
 
-      // 根据用户是否已经收藏来调用创建或删除收藏的 API
       if (!isBookmarked) {
         await axios.post(`http://127.0.0.1:8000/api/posts/${recipeId}/bookmark/`, null, config);
         setIsBookmarked(true);

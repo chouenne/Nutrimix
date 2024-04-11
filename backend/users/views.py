@@ -40,10 +40,10 @@ class UserDeleteView(generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def delete(self, request, *args, **kwargs):
-        user_id = kwargs.get("pk")  # 获取 URL 中的用户 ID 参数
+        user_id = kwargs.get("pk")  
         if user_id:
             try:
-                user = NewUser.objects.get(pk=user_id)  # 使用整数型主键查找用户
+                user = NewUser.objects.get(pk=user_id)
                 user.delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
             except NewUser.DoesNotExist:
@@ -79,5 +79,5 @@ class UserDetailView(generics.RetrieveAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         data = serializer.data
-        data["id"] = instance.id  # 将用户的 ID 添加到返回的数据中
+        data["id"] = instance.id
         return Response(data)

@@ -67,7 +67,6 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView, PostUserWritePermission)
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-# 评论
 class CommentListCreate(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
@@ -80,8 +79,6 @@ class CommentListCreate(generics.ListCreateAPIView):
         post_id = self.kwargs.get("pk")
         return Comment.objects.filter(post_id=post_id)
 
-
-# 点赞
 # class LikeCreateDestroy(generics.CreateAPIView, generics.DestroyAPIView):
 class PostLikesView(APIView):
     def get(self, request, post_id):
@@ -102,31 +99,26 @@ class LikeCreateDestroy(CreateAPIView, DestroyAPIView):
     def perform_create(self, serializer):
         user = self.request.user
         if user.is_authenticated:
-            # 如果用户已登录，则将点赞与该用户关联
             serializer.save(user=user)
         else:
-            # 如果用户未登录，则将点赞与 AnonymousUser 关联
             serializer.save(user=None)
 
-
-# 收藏
 class PostBookmarksView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, post_id):
         bookmarks_count = Bookmark.objects.filter(
             post_id=post_id
-        ).count()  # 获取收藏数量
+        ).count()
         user = request.user
         is_bookmarked = Bookmark.objects.filter(
             post_id=post_id, user=user
-        ).exists()  # 检查当前用户是否已经收藏
+        ).exists()
         return Response(
             {"bookmarks_count": bookmarks_count, "is_bookmarked": is_bookmarked}
         )
 
 
-# 收藏创建和删除
 class BookmarkCreateDestroy(generics.CreateAPIView, generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]
 
