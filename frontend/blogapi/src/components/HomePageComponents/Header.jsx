@@ -57,15 +57,15 @@ export default function Header({ searchQuery, setSearchQuery }) {
   useEffect(() => {
     const checkAuthentication = async () => {
       // Check if access token exists in local storage
-      const accessToken = localStorage.getItem("access_token");
-      // const userId = localStorage.getItem('user_id');
 
+      const accessToken = localStorage.getItem('access_token');
       if (accessToken) {
         setIsAuthenticated(true);
 
         try {
           const response = await axiosInstance.get("/users/users/current/");
           console.log(response, "response");
+
           setUser(response.data);
         } catch (error) {
           console.error("Failed to fetch user data:", error);
@@ -78,8 +78,9 @@ export default function Header({ searchQuery, setSearchQuery }) {
 
     // Check authentication on component mount
     checkAuthentication();
+
     console.log(isAuthenticated, "isAuthenticated");
-  }, []);
+  }, []); 
 
   const handleLogout = () => {
     // Clear access token from local storage and reset state
@@ -98,15 +99,17 @@ export default function Header({ searchQuery, setSearchQuery }) {
   const handleProfile = () => {
     navigate("/profile");
   };
-  const handleProfileadmin = () => {
-    navigate("/ManageAccounts");
-  };
 
   const handleSearch = (query) => {
     // Pass the search query to the parent component or perform search actions here
     console.log("Search query:", query);
     // For now, let's just log the search query
   };
+
+  const handleProfileadmin = () => {
+    navigate('/ManageAccounts');
+  };
+
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -129,6 +132,7 @@ export default function Header({ searchQuery, setSearchQuery }) {
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
+
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
@@ -140,6 +144,7 @@ export default function Header({ searchQuery, setSearchQuery }) {
                 }
               }}
             />
+        
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <div className="flex uppercase font-semibold">
@@ -171,12 +176,16 @@ export default function Header({ searchQuery, setSearchQuery }) {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
+
                   <MenuItem onClick={handleProfile}>Profile</MenuItem>
                   {user.is_superuser && (
                     <MenuItem onClick={handleProfileadmin}>
                       <NavLink
                         to="/ManageAccounts"
+
                         style={{ textDecoration: "none", color: "inherit" }} // Apply styles here
+
+
                       >
                         Manage Accounts
                       </NavLink>
@@ -193,6 +202,7 @@ export default function Header({ searchQuery, setSearchQuery }) {
                   >
                     Logout
                   </MenuItem>
+
                 </Menu>
               </div>
             ) : (
