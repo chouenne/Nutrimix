@@ -1,55 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import InputBase from '@mui/material/InputBase';
-import logo from '../../assets/images/receipe-logo.svg';
-import axiosInstance from './axios';
-import Button from '@mui/material/Button';
-import { NavLink } from 'react-router-dom';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { styled, alpha } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import InputBase from "@mui/material/InputBase";
+import logo from "../../assets/images/receipe-logo.svg";
+import axiosInstance from "./axios";
+import Button from "@mui/material/Button";
+import { NavLink } from "react-router-dom";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import { useNavigate } from "react-router-dom";
 
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: '50px',
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: "50px",
   backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
+  "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: '40%',
+  width: "40%",
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'dark',
-  '& .MuiInputBase-input': {
+  color: "dark",
+  "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
+    transition: theme.transitions.create("width"),
+    width: "100%",
   },
 }));
 
-export default function Header() {
+export default function Header({ searchQuery, setSearchQuery }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // user login status
   const [user, setUser] = useState({}); // user info
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -58,18 +57,18 @@ export default function Header() {
   useEffect(() => {
     const checkAuthentication = async () => {
       // Check if access token exists in local storage
-      const accessToken = localStorage.getItem('access_token');
+      const accessToken = localStorage.getItem("access_token");
       // const userId = localStorage.getItem('user_id');
 
       if (accessToken) {
         setIsAuthenticated(true);
 
         try {
-          const response = await axiosInstance.get('/users/users/current/');
-          console.log(response, "response")
+          const response = await axiosInstance.get("/users/users/current/");
+          console.log(response, "response");
           setUser(response.data);
         } catch (error) {
-          console.error('Failed to fetch user data:', error);
+          console.error("Failed to fetch user data:", error);
         }
       } else {
         setIsAuthenticated(false);
@@ -79,12 +78,12 @@ export default function Header() {
 
     // Check authentication on component mount
     checkAuthentication();
-    console.log(isAuthenticated, "isAuthenticated")
+    console.log(isAuthenticated, "isAuthenticated");
   }, []);
 
   const handleLogout = () => {
     // Clear access token from local storage and reset state
-    localStorage.removeItem('access_token');
+    localStorage.removeItem("access_token");
     setIsAuthenticated(false);
     setUser({});
   };
@@ -97,18 +96,32 @@ export default function Header() {
   };
 
   const handleProfile = () => {
-    navigate('/profile');
+    navigate("/profile");
   };
   const handleProfileadmin = () => {
-    navigate('/ManageAccounts');
+    navigate("/ManageAccounts");
   };
 
+  const handleSearch = (query) => {
+    // Pass the search query to the parent component or perform search actions here
+    console.log("Search query:", query);
+    // For now, let's just log the search query
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ backgroundColor: '#DFE0DE', boxShadow: 'none' }}>
+      <AppBar
+        position="static"
+        style={{ backgroundColor: "#DFE0DE", boxShadow: "none" }}
+      >
         <Toolbar>
-          <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ mr: 2 }}
+          >
             <MenuIcon />
           </IconButton>
           <img src={logo} alt="Logo" style={{ width: 40, marginRight: 16 }} />
@@ -116,12 +129,22 @@ export default function Header() {
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
-            <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch(searchQuery);
+                }
+              }}
+            />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <div className='flex uppercase font-semibold'>
+          <div className="flex uppercase font-semibold">
             {isAuthenticated ? (
-              <div className='flex items-center gap-4'>
+              <div className="flex items-center gap-4">
                 <IconButton
                   size="large"
                   aria-label="account of current user"
@@ -137,30 +160,39 @@ export default function Header() {
                   id="menu-appbar"
                   anchorEl={anchorEl}
                   anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
+                    vertical: "top",
+                    horizontal: "right",
                   }}
                   keepMounted
                   transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
+                    vertical: "top",
+                    horizontal: "right",
                   }}
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-
                   <MenuItem onClick={handleProfile}>Profile</MenuItem>
                   {user.is_superuser && (
                     <MenuItem onClick={handleProfileadmin}>
                       <NavLink
                         to="/ManageAccounts"
-                        style={{ textDecoration: 'none', color: 'inherit' }} // Apply styles here
+                        style={{ textDecoration: "none", color: "inherit" }} // Apply styles here
                       >
                         Manage Accounts
                       </NavLink>
                     </MenuItem>
                   )}
-                  <MenuItem onClick={handleLogout} variant="contained" sx={{ bgcolor: '#f06292', color: 'white', textTransform: 'capitalize' }}>Logout</MenuItem>
+                  <MenuItem
+                    onClick={handleLogout}
+                    variant="contained"
+                    sx={{
+                      bgcolor: "#f06292",
+                      color: "white",
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    Logout
+                  </MenuItem>
                 </Menu>
               </div>
             ) : (
@@ -169,7 +201,7 @@ export default function Header() {
                   href="#"
                   color="primary"
                   variant="outlined"
-                  sx={{ margin: '0 8px' }}
+                  sx={{ margin: "0 8px" }}
                   component={NavLink}
                   to="/login"
                 >
@@ -179,7 +211,7 @@ export default function Header() {
                   href="#"
                   color="primary"
                   variant="outlined"
-                  sx={{ margin: '0 8px' }}
+                  sx={{ margin: "0 8px" }}
                   component={NavLink}
                   to="/register"
                 >

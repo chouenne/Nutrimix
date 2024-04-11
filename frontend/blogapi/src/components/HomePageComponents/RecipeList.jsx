@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import SortMenu from "./Sortmenu"; // Import the SortMenu component
 import "../../css/RecipeList.css";
 
-const RecipeList = () => {
+const RecipeList = ({ searchQuery }) => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -46,7 +46,14 @@ const RecipeList = () => {
         return <div>{error}</div>;
     }
 
-    const filteredPosts = selectedCategory === "All" ? posts : posts.filter(post => post.category === selectedCategory);
+    const filteredPosts = selectedCategory === "All"
+    ? posts.filter(post =>
+        post.title.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : posts.filter(post =>
+        post.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        post.category === selectedCategory
+      );
 
     return (
         <div>

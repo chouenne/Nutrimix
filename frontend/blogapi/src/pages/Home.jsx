@@ -9,9 +9,9 @@ function Home() {
 
   return (
     <div>
-      <Header setSearchQuery={setSearchQuery} /> {/* Pass setSearchQuery function to Header */}
+      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} /> {/* Pass searchQuery and setSearchQuery to Header */}
       <div style={{ display: 'flex' }}>
-       <FilterButton />
+        <FilterButton />
       </div>
       <RecipeList searchQuery={searchQuery} /> {/* Pass searchQuery as prop to RecipeList */}
       <footer>
@@ -22,4 +22,6 @@ function Home() {
 }
 
 export default Home;
+
+
 
