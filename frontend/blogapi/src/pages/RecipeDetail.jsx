@@ -15,10 +15,10 @@ const RecipeDetail = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   useEffect(() => {
+    if (!recipeId) return;
     const fetchPost = async () => {
       try {
         const response = await axios.get(`http://127.0.0.1:8000/api/${recipeId}/`);
-        console.log(response,"dd")
         setPost(response.data);
         setLikes(response.data.likes);
         setIsLiked(response.data.isLiked);
@@ -35,7 +35,6 @@ const RecipeDetail = () => {
     const fetchComments = async () => {
       try {
         const response = await axios.get(`http://127.0.0.1:8000/api/posts/${recipeId}/comments/`);
-        console.log(response,"gg")
         setComments(response.data);
       } catch (error) {
         console.error('Error fetching comments:', error);
@@ -43,6 +42,27 @@ const RecipeDetail = () => {
     };
 
     fetchComments();
+
+    const fetchBookmarkInfo = async () => {
+      try {
+        const accessToken = localStorage.getItem('access_token');
+        if (!accessToken) {
+          console.error('Access token not found in local storage.');
+          return;
+        }
+        const config = {
+          headers: {
+            'Authorization': `JWT ${accessToken}`,
+          }
+        };
+        const response = await axios.get(`http://127.0.0.1:8000/api/posts/${recipeId}/bookmarks/`, config);
+        setIsBookmarked(response.data.is_bookmarked);
+      } catch (error) {
+        console.error('Error fetching bookmark info:', error);
+      }
+    };
+
+    fetchBookmarkInfo();
   }, [recipeId]);
 
   const handleCommentChange = (e) => {
@@ -52,10 +72,9 @@ const RecipeDetail = () => {
   const handleSubmitComment = async () => {
     try {
       const accessToken = localStorage.getItem('access_token');
-      // console.log(accessToken,"accessToken")
       if (!accessToken) {
         console.error('Access token not found in local storage.');
-        return; 
+        return;
       }
       const config = {
         headers: {
@@ -64,7 +83,6 @@ const RecipeDetail = () => {
       };
 
       const response = await axios.post(`http://127.0.0.1:8000/api/posts/${recipeId}/comments/`, { post: recipeId, content: comment }, config);
-      console.log(response, "ddd");
       setComments(prevComments => {
         if (!Array.isArray(prevComments)) {
           return [response.data];

@@ -5,6 +5,7 @@ import Register from './components/HomePageComponents/register'
 import Login from './components/HomePageComponents/login'
 import UserProfile from './components/HomePageComponents/userProfile';
 import ManageAccounts from './components/HomePageComponents/ManageAccounts';
+import Favorites from './components/HomePageComponents/Favorites';
 
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
         <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/manageAccounts" element={<ManageAccounts />} />
+          <Route path="/favorites/:recipeId?" element={<Favorites recipeId="" />} />
+          <Route path="/favorites" element={<Favorites recipeId="" />} />
 
       </Routes>
     </div>

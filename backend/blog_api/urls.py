@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import (
+    AllBookmarksView,
     BookmarkCreateDestroy,
     CommentListCreate,
     LikeCreateDestroy,
@@ -41,4 +42,5 @@ urlpatterns = [
         BookmarkCreateDestroy.as_view(),
         name="bookmark-create-destroy",
     ),
+    path("bookmarks/", AllBookmarksView.as_view(), name="all-bookmarks"),
 ]

@@ -53,3 +53,5 @@ http://127.0.0.1:8000/api/posts/13/bookmark/  POST
 {
     "message": "Bookmark already exists."
 }
+
+http://127.0.0.1:8000/api/bookmarks/  GET  get all favoraties data from api

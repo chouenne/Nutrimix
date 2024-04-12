@@ -10,11 +10,10 @@ import InputBase from "@mui/material/InputBase";
 import logo from "../../assets/images/receipe-logo.svg";
 import axiosInstance from "./axios";
 import Button from "@mui/material/Button";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -109,7 +108,9 @@ export default function Header({ searchQuery, setSearchQuery }) {
   const handleProfileadmin = () => {
     navigate('/ManageAccounts');
   };
-
+  const handleMyFavorites = () => {
+    navigate('/favorites');
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -178,6 +179,7 @@ export default function Header({ searchQuery, setSearchQuery }) {
                 >
 
                   <MenuItem onClick={handleProfile}>Profile</MenuItem>
+                  <MenuItem onClick={handleMyFavorites}>My Favorites</MenuItem>
                   {user.is_superuser && (
                     <MenuItem onClick={handleProfileadmin}>
                       <NavLink

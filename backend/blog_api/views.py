@@ -136,3 +136,13 @@ class BookmarkCreateDestroy(generics.CreateAPIView, generics.DestroyAPIView):
             bookmark.delete()
             return Response(status=204)
         return Response(status=404)
+
+
+class AllBookmarksView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        bookmarks = Bookmark.objects.filter(user=user)
+        serializer = BookmarkSerializer(bookmarks, many=True)
+        return Response(serializer.data)
