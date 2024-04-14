@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axiosInstance from "./axios";
 import { Link } from "react-router-dom";
 import "../../css/RecipeList.css";
+import Footer from './Footer';
+import Header from './Header';
 
 const RecipeList = () => {
     const [posts, setPosts] = useState([]);
@@ -173,6 +175,7 @@ const RecipeList = () => {
 
     return (
         <div>
+            <Header></Header>
             <h2>Recipe</h2>
             <div className="recipe-list">
                 {posts.map((post) => (
@@ -207,6 +210,7 @@ const RecipeList = () => {
                 )}
             </div>
             <button onClick={() => window.history.back()}>Back</button>
+            <Footer></Footer>
         </div>
     );
 };

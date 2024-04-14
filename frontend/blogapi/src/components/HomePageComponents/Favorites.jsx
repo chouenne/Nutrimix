@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Footer from './Footer';
+import Header from './Header';
 
 const Favorites = () => {
     const [favorites, setFavorites] = useState([]);
@@ -79,6 +81,7 @@ const Favorites = () => {
 
     return (
         <div>
+            <Header></Header>
             <h2>My Favorites</h2>
             <div className="recipe-list">
                 {favoritePosts.map((post) => (
@@ -91,6 +94,7 @@ const Favorites = () => {
                     </div>
                 ))}
             </div>
+            <Footer></Footer>
         </div>
     );
 };
