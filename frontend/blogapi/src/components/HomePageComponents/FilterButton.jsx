@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Popover from '@mui/material/Popover';
 import Box from '@mui/material/Box';
-import Filter from '../HomePageComponents/Filter';
+import Filter from './Filter'; // Import the Filter component
 
-export default function FilterButton({ onApplyFilter }) {
+const FilterButton = ({ onApplyFilter }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -43,4 +43,6 @@ export default function FilterButton({ onApplyFilter }) {
       </Popover>
     </div>
   );
-}
+};
+
+export default FilterButton;
