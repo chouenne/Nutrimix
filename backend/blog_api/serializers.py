@@ -27,6 +27,7 @@ class PostSerializer(serializers.ModelSerializer):
             "content",
             "status",
             "image",
+            'max_cooking_time'
         )
 
 

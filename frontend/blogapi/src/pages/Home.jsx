@@ -11,7 +11,6 @@ function Home() {
     <div>
       <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} /> {/* Pass searchQuery and setSearchQuery to Header */}
       <div style={{ display: 'flex' }}>
-        <FilterButton />
       </div>
       <RecipeList searchQuery={searchQuery} /> {/* Pass searchQuery as prop to RecipeList */}
       <footer>

@@ -2,13 +2,11 @@ from django.db import models
 from django.utils import timezone
 from django.conf import settings
 
-
 class Category(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
-
 
 class Post(models.Model):
     class PostObjects(models.Manager):
@@ -20,6 +18,18 @@ class Post(models.Model):
         ("published", "Published"),
     )
 
+    COOKING_TIME_CHOICES = [
+        (5, '5 mins'),
+        (10, '10 mins'),
+        (15, '15 mins'),
+        (20, '20 mins'),
+    ]
+    max_cooking_time = models.IntegerField(
+        choices=COOKING_TIME_CHOICES,
+        default=None,
+        blank=True,
+        null=True
+    )
     category = models.ForeignKey(Category, on_delete=models.PROTECT, null=True)
     title = models.CharField(max_length=250)
     excerpt = models.TextField(null=True)
