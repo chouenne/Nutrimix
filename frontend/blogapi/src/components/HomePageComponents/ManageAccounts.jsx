@@ -8,6 +8,7 @@ const deleteUserByEmail = async (email, setUsers) => {
     
     try {
         const response = await axiosInstance.get(`/users/users/${email}/`);
+        console.log(response,"aa")
         const userId = response.data.id;
 
         const token = localStorage.getItem('access_token');
@@ -32,6 +33,7 @@ function ManageAccounts() {
         const fetchUsers = async () => {
             try {
                 const response = await axiosInstance.get('/users/users/');
+                console.log(response,"hh")
                 setUsers(response.data);
             } catch (error) {
                 console.error('Failed to fetch user data:', error);

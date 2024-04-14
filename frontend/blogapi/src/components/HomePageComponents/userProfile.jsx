@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "./axios";
 import { Link } from "react-router-dom";
-import "../../css/RecipeList.css";
+import "../../css/userProfile.css";
 import Footer from './Footer';
 import Header from './Header';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import { deepOrange, deepPurple } from '@mui/material/colors';
 
 const RecipeList = () => {
+    const [user, setUser] = useState({});
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -39,13 +43,32 @@ const RecipeList = () => {
         const fetchCategories = async () => { // Fetch categories from API
             try {
                 const response = await axiosInstance.get('/category/');
-                console.log(response, "aa")
+                // console.log(response, "aa")
                 setCategories(response.data || []);
             } catch (error) {
                 console.error('Error fetching categories:', error);
             }
         };
 
+        const checkAuthentication = async () => {
+            // Check if access token exists in local storage
+
+            // const accessToken = localStorage.getItem('access_token');
+            // if (accessToken) {
+
+                try {
+                    const response = await axiosInstance.get("/users/users/current/");
+                    console.log(response, "response111");
+
+                    setUser(response.data);
+                } catch (error) {
+                    console.error("Failed to fetch user data:", error);
+                }
+        
+        };
+
+        // Check authentication on component mount
+        checkAuthentication();
         fetchUserPosts();
         fetchCategories(); // Call the function to fetch categories
     }, []);
@@ -176,7 +199,10 @@ const RecipeList = () => {
     return (
         <div>
             <Header></Header>
-            <h2>Recipe</h2>
+            <h1>My froflie</h1>
+            <Avatar sx={{ bgcolor: deepPurple[500] , width: 66, height: 66 }} >{user.user_name}</Avatar>
+            {/* <h2>Name:{user.user_name}</h2> */}
+            <h2>emial:{user.email}</h2>
             <div className="recipe-list">
                 {posts.map((post) => (
                     <div key={post.id} className="recipe-card">
@@ -209,7 +235,7 @@ const RecipeList = () => {
                     <button onClick={handleAddPost}>Add Post</button>
                 )}
             </div>
-            <button onClick={() => window.history.back()}>Back</button>
+            {/* <button onClick={() => window.history.back()}>Back</button> */}
             <Footer></Footer>
         </div>
     );

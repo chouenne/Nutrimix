@@ -86,6 +86,7 @@ export default function Header({ searchQuery, setSearchQuery }) {
     localStorage.removeItem("access_token");
     setIsAuthenticated(false);
     setUser({});
+    navigate('/');
   };
 
   const handleClose = () => {

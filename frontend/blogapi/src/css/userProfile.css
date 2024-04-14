@@ -1,0 +1,74 @@
+
+.Avatar {
+    background-color: #673ab7;
+    color: #fff;
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    margin: 20px auto;
+}
+
+/* Recipe Card Styles */
+.recipe-card {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.recipe-card img {
+    max-width: 50%;
+    border-radius: 8px;
+}
+
+.recipe-card h3 {
+    margin: 0;
+}
+
+.recipe-card p {
+    margin: 5px 0;
+    color: #666;
+}
+
+/* Recipe List Styles */
+.recipe-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Form Styles */
+input[type="text"],
+select {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="file"] {
+    margin-bottom: 15px;
+}
+
+/* Button Styles */
+button {
+    background-color: #673ab7;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color: #5a2d91;
+}
+
