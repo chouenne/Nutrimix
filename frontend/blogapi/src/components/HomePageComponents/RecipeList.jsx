@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import SortMenu from "./Sortmenu"; // Import the SortMenu component
+import FilterButton from "./FilterButton";
 import "../../css/RecipeList.css";
 
 const RecipeList = ({ searchQuery }) => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [maxCookingTimeFilter, setMaxCookingTimeFilter] = useState(20); // Initial value for max cooking time filter
     const [selectedCategory, setSelectedCategory] = useState("All");
+
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -30,12 +33,22 @@ const RecipeList = ({ searchQuery }) => {
         fetchPosts();
     }, []);
 
+    console.log(posts);
+
+
     useEffect(() => {
         localStorage.setItem("selectedCategory", selectedCategory);
     }, [selectedCategory]);
 
     const handleCategorySelect = (category) => {
         setSelectedCategory(category);
+    };
+
+    const handleApplyFilter = (filterOptions) => {
+        console.log("Filter options:", filterOptions);
+        console.log("Max cooking time filter set to:C", filterOptions.maxCookingTime);
+        setMaxCookingTimeFilter(filterOptions.maxCookingTime);
+  
     };
 
     if (loading) {
@@ -46,18 +59,22 @@ const RecipeList = ({ searchQuery }) => {
         return <div>{error}</div>;
     }
 
+    console.log("Max Cooking Time Filter:", maxCookingTimeFilter);
+
     const filteredPosts = selectedCategory === "All"
-    ? posts.filter(post =>
-        post.title.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : posts.filter(post =>
-        post.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
-        post.category === selectedCategory
-      );
+        ? posts.filter(post =>
+            post.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
+            (maxCookingTimeFilter === 0 || post.max_cooking_time <= maxCookingTimeFilter)
+          )
+        : posts.filter(post =>
+            post.category === selectedCategory &&
+            (maxCookingTimeFilter === 0 || post.max_cooking_time <= maxCookingTimeFilter)
+          );
 
     return (
         <div>
             <h2>Recipe</h2>
+            <FilterButton onApplyFilter={handleApplyFilter} />
             <SortMenu onSelectCategory={handleCategorySelect} />
             <div className="recipe-list">
                 {filteredPosts.map((post) => (
