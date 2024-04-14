@@ -157,6 +157,9 @@ const RecipeDetail = () => {
       <p>{post.excerpt}</p>
       <h3>Contents:</h3>
       <p>{post.content}</p>
+      {/* Display max cooking time */}
+      <h3>Max Cooking Time:</h3>
+      <p>{post.max_cooking_time} minutes</p>
 
       {/* Display comments */}
       <h3>Comments:</h3>
