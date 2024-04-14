@@ -54,7 +54,6 @@ class PostList(generics.ListCreateAPIView):
         category_id = self.request.data.get("category", None)
         serializer.save(author=self.request.user, category_id=category_id)
 
-
 @api_view(["GET"])
 def category(request):
     categories = Category.objects.all()

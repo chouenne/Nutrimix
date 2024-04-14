@@ -8,6 +8,7 @@ class PostAdmin(admin.ModelAdmin):
         "title",
         "id",
         "category",
+        'max_cooking_time',
         "ingredient",
         "status",
         "slug",
@@ -17,6 +18,11 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {
         "slug": ("title",),
     }
+
+    def max_cooking_time(self, obj):
+        return obj.max_cooking_time
+
+    max_cooking_time.short_description = 'Max Cooking Time'
 
     def display_image(self, obj):
         return obj.image.url if obj.image else None
