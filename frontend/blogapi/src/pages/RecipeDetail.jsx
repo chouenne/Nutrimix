@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import "../css/RecipeDetail.css";
+import Header from '../components/HomePageComponents/Header';
+import Footer from '../components/HomePageComponents/Footer';
 
 const RecipeDetail = () => {
   const { recipeId } = useParams();
@@ -147,7 +149,8 @@ const RecipeDetail = () => {
   }
 
   return (
-    <div key={post.id} className="recipe-detail">
+      <div key={post.id} className="recipe-detail">
+        <Header></Header>
       {post.image && <img src={post.image} alt={post.title} />}
       <h2>{post.title}</h2>
       <p>By: {post.author}</p>
@@ -173,7 +176,9 @@ const RecipeDetail = () => {
 
       {/* Bookmark button */}
       <button onClick={handleBookmark}>{isBookmarked ? 'Remove Bookmark' : 'Bookmark'}</button>
-    </div>
+      <Footer></Footer>
+      </div>
+      
   );
 };
 

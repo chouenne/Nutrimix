@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from './axios';
 import { useNavigate } from 'react-router-dom';
+import Footer from './Footer';
+import Header from './Header';
 
 const deleteUserByEmail = async (email, setUsers) => {
     
@@ -45,6 +47,7 @@ function ManageAccounts() {
 
     return (
         <div>
+            <Header></Header>
             <h2>User List</h2>
             <button onClick={handleBack}>Back</button>
 
@@ -56,6 +59,7 @@ function ManageAccounts() {
                     </li>
                 ))}
             </ul>
+            <Footer></Footer>
         </div>
     );
 }
