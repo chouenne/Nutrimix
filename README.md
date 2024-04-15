@@ -1,4 +1,12 @@
-Project: NutriMix - Empowering Home Chefs.
+Project: NutriMix - Empowering Home Chefs
+
+<<<<<<< HEAD
+Groupe member:
+Xuan;
+Jessica;
+Myrna;
+Wei
+=======
 Project Management:
 Website Presentation - https://niquenat.github.io/webproject-group-recipe-nutrimix-myrna/
 
