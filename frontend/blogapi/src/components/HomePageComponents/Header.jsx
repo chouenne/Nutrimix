@@ -156,9 +156,9 @@ export default function Header({ searchQuery, setSearchQuery }) {
             <IconButton
               size="large"
               edge="start"
-              color="inherit"
+              color="#ff7961"
               aria-label="open drawer"
-              sx={{ mr: 8}}
+              sx={{ mr: 10 }}
             >
               <HomeIcon />
             </IconButton>
@@ -244,7 +244,7 @@ export default function Header({ searchQuery, setSearchQuery }) {
                   component={NavLink}
                   to="/register"
                 >
-                  Register
+                  Sign Up
                 </Button>
               </>
             )}
