@@ -43,15 +43,15 @@ function ManageAccounts() {
         fetchUsers();
     }, [setUsers]);
 
-    const handleBack = () => {
-        navigate("/");
-    };
+    // const handleBack = () => {
+    //     navigate("/");
+    // };
 
     return (
         <div>
             <Header></Header>
             <h2>User List</h2>
-            <button onClick={handleBack}>Back</button>
+            {/* <button onClick={handleBack}>Back</button> */}
 
             <ul>
                 {users.map(user => (

@@ -14,6 +14,9 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import HomeIcon from '@mui/icons-material/Home';
+import { Link } from 'react-router-dom';
+
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -148,6 +151,19 @@ export default function Header({ searchQuery, setSearchQuery }) {
             />
         
           </Search>
+
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: 8}}
+            >
+              <HomeIcon />
+            </IconButton>
+          </Link>
+
           <Box sx={{ flexGrow: 1 }} />
           <div className="flex uppercase font-semibold">
             {isAuthenticated ? (
