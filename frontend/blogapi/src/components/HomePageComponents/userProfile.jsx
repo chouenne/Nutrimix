@@ -89,6 +89,7 @@ const RecipeList = () => {
         } catch (error) {
             console.error("Failed to delete post:", error);
         }
+        window.location.reload();
     };
 
     const handleChange = (event) => {
