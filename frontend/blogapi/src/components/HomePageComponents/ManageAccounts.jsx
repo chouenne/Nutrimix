@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from './axios';
 import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
-import Header from './Header';
+import Logo from './Logo';
+import UserControl from './UserControl';
 
 const deleteUserByEmail = async (email, setUsers) => {
-    
+
     try {
         const response = await axiosInstance.get(`/users/users/${email}/`);
-        console.log(response,"aa")
         const userId = response.data.id;
 
         const token = localStorage.getItem('access_token');
@@ -27,14 +27,15 @@ const deleteUserByEmail = async (email, setUsers) => {
 
 function ManageAccounts() {
     const [users, setUsers] = useState([]);
+    const [userCount, setUserCount] = useState(0);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUsers = async () => {
             try {
                 const response = await axiosInstance.get('/users/users/');
-                console.log(response,"hh")
                 setUsers(response.data);
+                setUserCount(response.data.length);
             } catch (error) {
                 console.error('Failed to fetch user data:', error);
             }
@@ -43,16 +44,18 @@ function ManageAccounts() {
         fetchUsers();
     }, [setUsers]);
 
-    // const handleBack = () => {
-    //     navigate("/");
-    // };
+    const handleBack = () => {
+        navigate("/");
+    };
 
     return (
-        <div>
-            <Header></Header>
+        <div className="detail-container">
+            <header className="header-flex" >
+                <Logo />
+                <UserControl />
+            </header>
+            <div style={{ borderBottom: '0.5px solid #CCCCCC', marginTop: '3%', marginBottom: '3%' }}></div>
             <h2>User List</h2>
-            {/* <button onClick={handleBack}>Back</button> */}
-
             <ul>
                 {users.map(user => (
                     <li key={user.email}>
@@ -61,6 +64,11 @@ function ManageAccounts() {
                     </li>
                 ))}
             </ul>
+
+            <h2>Stastic</h2>
+
+            <p>Total Users: {userCount}</p>
+
             <Footer></Footer>
         </div>
     );

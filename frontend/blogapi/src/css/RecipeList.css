@@ -1,7 +1,15 @@
+h3{
+  font-family:Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 200;
+  margin-bottom: 5px;
+}
+
 .recipe-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4 columns */
   gap: 20px; /* Gap between cards */
+  margin-top: 10%;
 }
 
 .recipe-card {
@@ -10,5 +18,16 @@
 
 .recipe-card img{
   width:80%;
-  height:250px;
+  height:300px;
+  border-radius: 25px;
 }
+
+.filter-flex{
+  display:flex;
+  justify-content: space-between;
+}
+
+.recipe-link {
+  text-decoration: none; 
+}
+

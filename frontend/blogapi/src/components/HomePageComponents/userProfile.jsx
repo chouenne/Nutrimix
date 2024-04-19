@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "./axios";
 import { Link } from "react-router-dom";
-import "../../css/userProfile.css";
-import Footer from './Footer';
-import Header from './Header';
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import { deepOrange, deepPurple } from '@mui/material/colors';
+import "../../css/UserProfile.css";
+import Footer from "./Footer";
+import Typography from "@mui/material/Typography";
+import Logo from "./Logo.jsx";
+import UserControl from "./UserControl.jsx";
+import {
+    Box, TextField, Select, MenuItem, Button, IconButton
+} from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 const RecipeList = () => {
     const [user, setUser] = useState({});
@@ -19,7 +23,8 @@ const RecipeList = () => {
         ingredient: "",
         excerpt: "",
         content: "",
-        image: null
+        image: null,
+        maxCookingTime: 0,
     });
     const [categories, setCategories] = useState([]);
     const [editingPostId, setEditingPostId] = useState(null);
@@ -27,10 +32,10 @@ const RecipeList = () => {
     useEffect(() => {
         const fetchUserPosts = async () => {
             try {
-                const response = await axiosInstance.get('', {
+                const response = await axiosInstance.get("", {
                     headers: {
-                        Authorization: `JWT ${localStorage.getItem('access_token')}`
-                    }
+                        Authorization: `JWT ${localStorage.getItem("access_token")}`,
+                    },
                 });
                 setPosts(response.data || []);
                 setLoading(false);
@@ -40,13 +45,14 @@ const RecipeList = () => {
             }
         };
 
-        const fetchCategories = async () => { // Fetch categories from API
+        const fetchCategories = async () => {
+            // Fetch categories from API
             try {
-                const response = await axiosInstance.get('/category/');
-                // console.log(response, "aa")
+                const response = await axiosInstance.get("/category/");
+                console.log(response, "aa");
                 setCategories(response.data || []);
             } catch (error) {
-                console.error('Error fetching categories:', error);
+                console.error("Error fetching categories:", error);
             }
         };
 
@@ -64,10 +70,8 @@ const RecipeList = () => {
             } catch (error) {
                 console.error("Failed to fetch user data:", error);
             }
-
         };
 
-        // Check authentication on component mount
         checkAuthentication();
         fetchUserPosts();
         fetchCategories(); // Call the function to fetch categories
@@ -76,34 +80,37 @@ const RecipeList = () => {
     const handleDelete = async (postId) => {
         try {
             await axiosInstance.delete(`/${postId}/`);
-            const response = await axiosInstance.get('/users/users/current/', {
+            const response = await axiosInstance.get("/users/users/current/", {
                 headers: {
-                    Authorization: `JWT ${localStorage.getItem('access_token')}`
-                }
+                    Authorization: `JWT ${localStorage.getItem("access_token")}`,
+                },
             });
             setPosts(response.data.posts || []);
         } catch (error) {
-            console.error('Failed to delete post:', error);
+            console.error("Failed to delete post:", error);
         }
     };
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         // If the target field is "category", find the corresponding category ID
-        const categoryId = categories.find(category => category.name === value)?.id || "";
-        console.log(categoryId, "categoryId")
+        const categoryId =
+            categories.find((category) => category.name === value)?.id || "";
+        console.log(categoryId, "categoryId");
         // Update the newPost state with the category ID
-        setNewPost(prevState => ({
+        setNewPost((prevState) => ({
             ...prevState,
-            [name]: name === "category" ? categoryId : value
+            [name]: name === "category" ? categoryId : value,
+            maxCookingTime:
+                name === "maxCookingTime" ? parseInt(value) : prevState.maxCookingTime, // Parse the selected value to an integer
         }));
     };
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
-        setNewPost(prevState => ({
+        setNewPost((prevState) => ({
             ...prevState,
-            image: file
+            image: file,
         }));
     };
 
@@ -116,18 +123,19 @@ const RecipeList = () => {
             formData.append("excerpt", newPost.excerpt);
             formData.append("content", newPost.content);
             formData.append("image", newPost.image);
+            formData.append("max_cooking_time", newPost.maxCookingTime);
 
-            await axiosInstance.post('', formData, {
+            await axiosInstance.post("", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
-                    Authorization: `JWT ${localStorage.getItem('access_token')}`
-                }
+                    Authorization: `JWT ${localStorage.getItem("access_token")}`,
+                },
             });
 
-            const response = await axiosInstance.get('/users/users/current/', {
+            const response = await axiosInstance.get("/users/users/current/", {
                 headers: {
-                    Authorization: `JWT ${localStorage.getItem('access_token')}`
-                }
+                    Authorization: `JWT ${localStorage.getItem("access_token")}`,
+                },
             });
             setPosts(response.data.posts || []);
             setNewPost({
@@ -136,17 +144,18 @@ const RecipeList = () => {
                 ingredient: "",
                 excerpt: "",
                 content: "",
-                image: null
+                image: null,
+                maxCookingTime: "",
             });
         } catch (error) {
-            console.error('Failed to add post:', error);
+            console.error("Failed to add post:", error);
         }
-        window.location.reload()
+        window.location.reload();
     };
 
     const handleEdit = (postId) => {
         setEditingPostId(postId);
-        const postToEdit = posts.find(post => post.id === postId);
+        const postToEdit = posts.find((post) => post.id === postId);
         setNewPost(postToEdit);
     };
 
@@ -159,18 +168,19 @@ const RecipeList = () => {
             formData.append("excerpt", newPost.excerpt);
             formData.append("content", newPost.content);
             formData.append("image", newPost.image);
+            formData.append("max_cooking_time", newPost.maxCookingTime);
 
             await axiosInstance.put(`/${editingPostId}/`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
-                    Authorization: `JWT ${localStorage.getItem('access_token')}`
-                }
+                    Authorization: `JWT ${localStorage.getItem("access_token")}`,
+                },
             });
 
-            const response = await axiosInstance.get('/users/users/current/', {
+            const response = await axiosInstance.get("/users/users/current/", {
                 headers: {
-                    Authorization: `JWT ${localStorage.getItem('access_token')}`
-                }
+                    Authorization: `JWT ${localStorage.getItem("access_token")}`,
+                },
             });
             setPosts(response.data.posts || []);
             setNewPost({
@@ -179,11 +189,11 @@ const RecipeList = () => {
                 ingredient: "",
                 excerpt: "",
                 content: "",
-                image: null
+                image: null,
             });
             setEditingPostId(null);
         } catch (error) {
-            console.error('Failed to edit post:', error);
+            console.error("Failed to edit post:", error);
         }
         window.location.reload();
     };
@@ -197,46 +207,155 @@ const RecipeList = () => {
     }
 
     return (
-        <div>
-            <Header></Header>
-            <h1>My froflie</h1>
-            <Avatar sx={{ bgcolor: deepPurple[500], width: 66, height: 66 }} >{user.user_name}</Avatar>
-            {/* <h2>Name:{user.user_name}</h2> */}
-            <h2>emial:{user.email}</h2>
+        <div className="profile-container">
+
+            <header className="profile-header-flex">
+                <Logo />
+                <UserControl />
+            </header>
+            <div style={{ borderBottom: '0.5px solid #CCCCCC', marginTop: '3%', marginBottom: '3%' }}></div>
+
+            <h2>My profile</h2>
+            <ul>
+                <li>username: {user.user_name}</li>
+                <li>email: {user.email}</li>
+            </ul>
+
+
+            <Box width="50%" className="textfield-container">
+                <h2>{editingPostId ? "Edit Post" : "Add New Recipe"}</h2>
+                <TextField
+                    fullWidth
+                    label="Title"
+                    name="title"
+                    value={newPost.title}
+                    onChange={handleChange}
+                    placeholder="Title"
+                    variant="outlined"
+                    margin="normal"
+                // sx={{ borderRadius: '25px' }} 
+                />
+                <Select
+                    fullWidth
+                    label="Category"
+                    name="category"
+                    value={newPost.category}
+                    onChange={handleChange}
+                    placeholder="Category"
+                    variant="outlined"
+                    margin="normal"
+                >
+                    <MenuItem value="">
+                        <em>Select Category</em>
+                    </MenuItem>
+                    {categories.map((category, index) => (
+                        <MenuItem key={index} value={category.name}>
+                            {category.name}
+                        </MenuItem>
+                    ))}
+                </Select>
+                <TextField
+                    fullWidth
+                    label="Ingredient"
+                    name="ingredient"
+                    value={newPost.ingredient}
+                    onChange={handleChange}
+                    placeholder="Ingredient"
+                    variant="outlined"
+                    margin="normal"
+                />
+                <TextField
+                    fullWidth
+                    label="Excerpt"
+                    name="excerpt"
+                    value={newPost.excerpt}
+                    onChange={handleChange}
+                    placeholder="Excerpt"
+                    variant="outlined"
+                    margin="normal"
+                />
+                <TextField
+                    fullWidth
+                    label="Content"
+                    name="content"
+                    value={newPost.content}
+                    onChange={handleChange}
+                    placeholder="Content"
+                    variant="outlined"
+                    margin="normal"
+                />
+                <input type="file" onChange={handleImageChange} />
+                <Select
+                    fullWidth
+                    label="Max Cooking Time"
+                    name="maxCookingTime"
+                    value={newPost.maxCookingTime}
+                    onChange={handleChange}
+                    variant="outlined"
+                    margin="normal"
+                    defaultValue=""
+                    // Adding style to change the color of the placeholder text
+                    sx={{
+                        "& .MuiSelect-placeholder": {
+                            color: "rgba(0, 0, 0, 0.54)", // Adjust the color as needed
+                        },
+                    }}
+                >
+                    <MenuItem value="" disabled>
+                        Select Max Cooking Time
+                    </MenuItem>
+                    <MenuItem value="5">5 mins</MenuItem>
+                    <MenuItem value="10">10 mins</MenuItem>
+                    <MenuItem value="15">15 mins</MenuItem>
+                    <MenuItem value="20">20 mins</MenuItem>
+                </Select>
+
+                {editingPostId ? (
+                    <Button
+                        variant="contained"
+                        // color="primary"
+                        onClick={handleSaveEdit}
+                        className="custom-button"
+                    >
+                        Save Edit
+                    </Button>
+                ) : (
+                    <Button
+                        variant="contained"
+                        // color="primary"
+                        onClick={handleAddPost}
+                        className="custom-button"
+                    >
+                        Add
+                    </Button>
+                )}
+
+            </Box>
+
+
+
+            <h2>Manage my recipe released</h2>
             <div className="recipe-list">
                 {posts.map((post) => (
                     <div key={post.id} className="recipe-card">
-                        <Link to={`/recipe/${post.id}`}>
+                        <Link to={`/recipe/${post.id}`} className="recipe-link">
                             {post.image && <img src={post.image} alt={post.title} />}
                             <h3>{post.title}</h3>
                             <p>{post.author}</p>
                         </Link>
-                        <button onClick={() => handleDelete(post.id)}>Delete</button>
-                        <button onClick={() => handleEdit(post.id)}>Edit</button>
+                        <>
+                            <button onClick={() => handleDelete(post.id)} className="icon-button delete-button">
+                                <DeleteIcon />
+                            </button>
+                            <button onClick={() => handleEdit(post.id)} className="icon-button edit-button">
+                                <EditIcon />
+                            </button>
+                        </>
                     </div>
                 ))}
             </div>
-            <div>
-                <h2>{editingPostId ? "Edit Post" : "Add New Post"}</h2>
-                <input type="text" name="title" value={newPost.title} onChange={handleChange} placeholder="Title" />
-                <select name="category" value={newPost.category} onChange={handleChange}>
-                    <option value="">Select Category</option>
-                    {categories.map((category, index) => ( // Render categories from state
-                        <option key={index} value={category.name}>{category.name}</option>
-                    ))}
-                </select>
-                <input type="text" name="ingredient" value={newPost.ingredient} onChange={handleChange} placeholder="Ingredient" />
-                <input type="text" name="excerpt" value={newPost.excerpt} onChange={handleChange} placeholder="Excerpt" />
-                <input type="text" name="content" value={newPost.content} onChange={handleChange} placeholder="Content" />
-                <input type="file" onChange={handleImageChange} />
-                {editingPostId ? (
-                    <button onClick={handleSaveEdit}>Save Edit</button>
-                ) : (
-                    <button onClick={handleAddPost}>Add Post</button>
-                )}
-            </div>
-            {/* <button onClick={() => window.history.back()}>Back</button> */}
-            <Footer></Footer>
+
+            <Footer />
         </div>
     );
 };

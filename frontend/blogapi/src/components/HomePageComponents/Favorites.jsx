@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
-import Header from './Header';
+import Logo from './Logo';
+import UserControl from './UserControl';
 
 const Favorites = () => {
     const [favorites, setFavorites] = useState([]);
@@ -80,13 +81,17 @@ const Favorites = () => {
     }
 
     return (
-        <div>
-            <Header></Header>
-            <h2>My Favorites</h2>
+        <div className="detail-container">
+            <header className="header-flex" >
+                <Logo />
+                <UserControl />
+            </header>
+            <div style={{ borderBottom: '0.5px solid #CCCCCC', marginTop: '3%', marginBottom: '3%' }}></div>
+            <h2>Recipes Collected</h2>
             <div className="recipe-list">
                 {favoritePosts.map((post) => (
                     <div key={post.id} className="recipe-card">
-                        <Link to={`/recipe/${post.id}`}>
+                        <Link to={`/recipe/${post.id}`} className="recipe-link">
                             {post.image && <img src={post.image} alt={post.title} />}
                             <h3>{post.title}</h3>
                             <p>{post.author}</p>

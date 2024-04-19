@@ -14,9 +14,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import HomeIcon from '@mui/icons-material/Home';
-import { Link } from 'react-router-dom';
-
+import Typography from "@mui/material/Typography";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -60,7 +58,7 @@ export default function Header({ searchQuery, setSearchQuery }) {
     const checkAuthentication = async () => {
       // Check if access token exists in local storage
 
-      const accessToken = localStorage.getItem('access_token');
+      const accessToken = localStorage.getItem("access_token");
       if (accessToken) {
         setIsAuthenticated(true);
 
@@ -82,7 +80,7 @@ export default function Header({ searchQuery, setSearchQuery }) {
     checkAuthentication();
 
     console.log(isAuthenticated, "isAuthenticated");
-  }, []); 
+  }, []);
 
   const handleLogout = () => {
     // Clear access token from local storage and reset state
@@ -110,20 +108,20 @@ export default function Header({ searchQuery, setSearchQuery }) {
   };
 
   const handleProfileadmin = () => {
-    navigate('/ManageAccounts');
+    navigate("/ManageAccounts");
   };
   const handleMyFavorites = () => {
-    navigate('/favorites');
+    navigate("/favorites");
   };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="static"
-        style={{ backgroundColor: "#DFE0DE", boxShadow: "none" }}
+        style={{ backgroundColor: "transparent", boxShadow: "none" }} // Remove background color and shadow
       >
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -131,13 +129,28 @@ export default function Header({ searchQuery, setSearchQuery }) {
             sx={{ mr: 2 }}
           >
             <MenuIcon />
-          </IconButton>
-          <img src={logo} alt="Logo" style={{ width: 40, marginRight: 16 }} />
+          </IconButton> */}
+          <div style={{ display: "flex", alignItems: "center", marginRight: "2%" }}>
+            <a href="/" style={{ textDecoration: "none" }}>
+              <img
+                src={logo}
+                alt="Logo"
+                style={{ width: 40, marginRight: 16 }}
+              />
+            </a>
+            <Typography
+              variant="h6"
+              component="div"
+              color="black"
+              sx={{ fontFamily: "Raleway" }}
+            >
+              NutriMix
+            </Typography>
+          </div>
           <Search>
             <SearchIconWrapper>
-              <SearchIcon />
+              <SearchIcon style={{ color: "#306A09" }} />
             </SearchIconWrapper>
-
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
@@ -148,22 +161,16 @@ export default function Header({ searchQuery, setSearchQuery }) {
                   handleSearch(searchQuery);
                 }
               }}
+              sx={{
+                borderColor: "#306A09",
+                borderWidth: "2px",
+                borderStyle: "solid",
+                borderRadius: "50px",
+                paddingLeft: "8px",
+                paddingRight: "8px",
+              }}
             />
-        
           </Search>
-
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <IconButton
-              size="large"
-              edge="start"
-              color="#ff7961"
-              aria-label="open drawer"
-              sx={{ mr: 10 }}
-            >
-              <HomeIcon />
-            </IconButton>
-          </Link>
-
           <Box sx={{ flexGrow: 1 }} />
           <div className="flex uppercase font-semibold">
             {isAuthenticated ? (
@@ -174,7 +181,7 @@ export default function Header({ searchQuery, setSearchQuery }) {
                   aria-controls="menu-appbar"
                   aria-haspopup="true"
                   onClick={handleMenu}
-                  color="inherit"
+                  color="#306A09"
                 >
                   <AccountCircle />
                   {user.user_name}
@@ -194,17 +201,13 @@ export default function Header({ searchQuery, setSearchQuery }) {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-
                   <MenuItem onClick={handleProfile}>Profile</MenuItem>
                   <MenuItem onClick={handleMyFavorites}>My Favorites</MenuItem>
                   {user.is_superuser && (
                     <MenuItem onClick={handleProfileadmin}>
                       <NavLink
                         to="/ManageAccounts"
-
-                        style={{ textDecoration: "none", color: "inherit" }} // Apply styles here
-
-
+                        style={{ textDecoration: "none", color: "inherit" }}
                       >
                         Manage Accounts
                       </NavLink>
@@ -214,14 +217,13 @@ export default function Header({ searchQuery, setSearchQuery }) {
                     onClick={handleLogout}
                     variant="contained"
                     sx={{
-                      bgcolor: "#f06292",
+                      bgcolor: "#306A09",
                       color: "white",
                       textTransform: "capitalize",
                     }}
                   >
                     Logout
                   </MenuItem>
-
                 </Menu>
               </div>
             ) : (
@@ -230,7 +232,11 @@ export default function Header({ searchQuery, setSearchQuery }) {
                   href="#"
                   color="primary"
                   variant="outlined"
-                  sx={{ margin: "0 8px" }}
+                  sx={{
+                    margin: "0 8px",
+                    color: "#306A09",
+                    borderColor: "#306A09",
+                  }} // Set green color for text and border
                   component={NavLink}
                   to="/login"
                 >
@@ -240,11 +246,15 @@ export default function Header({ searchQuery, setSearchQuery }) {
                   href="#"
                   color="primary"
                   variant="outlined"
-                  sx={{ margin: "0 8px" }}
+                  sx={{
+                    margin: "0 8px",
+                    color: "#306A09",
+                    borderColor: "#306A09",
+                  }} // Set green color for text and border
                   component={NavLink}
                   to="/register"
                 >
-                  Sign Up
+                  Register
                 </Button>
               </>
             )}

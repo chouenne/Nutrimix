@@ -18,10 +18,10 @@ function App() {
         <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<UserProfile />} />
-          <Route path="/manageAccounts" element={<ManageAccounts />} />
-          <Route path="/favorites/:recipeId?" element={<Favorites recipeId="" />} />
-          <Route path="/favorites" element={<Favorites recipeId="" />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/manageAccounts" element={<ManageAccounts />} />
+        <Route path="/favorites/:recipeId?" element={<Favorites recipeId="" />} />
+        <Route path="/favorites" element={<Favorites recipeId="" />} />
 
       </Routes>
     </div>
