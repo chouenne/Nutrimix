@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import "../css/RecipeDetail.css";
-import Header from '../components/HomePageComponents/Header';
+import UserControl from '../components/HomePageComponents/UserControl';
 import Footer from '../components/HomePageComponents/Footer';
+import Logo from '../components/HomePageComponents/Logo';
+import { IconButton, Tooltip } from '@mui/material';
+import { Favorite, FavoriteBorder, Star, StarBorder } from '@mui/icons-material';
+
 
 const RecipeDetail = () => {
   const { recipeId } = useParams();
@@ -99,20 +103,18 @@ const RecipeDetail = () => {
 
   const handleLike = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/posts/${recipeId}/likes/`);
-      const { likes_count, is_liked } = response.data;
-
-      setLikes(likes_count);
-      setIsLiked(is_liked);
-
-      if (!is_liked) {
-        await axios.post(`http://127.0.0.1:8000/api/posts/${recipeId}/like/`, { post: recipeId });
-      } else {
+      if (isLiked) {
         await axios.delete(`http://127.0.0.1:8000/api/posts/${recipeId}/like/`);
+        setLikes(likes - 1);
+      } else {
+        await axios.post(`http://127.0.0.1:8000/api/posts/${recipeId}/like/`, { post: recipeId });
+        setLikes(likes + 1);
       }
     } catch (error) {
       console.error('Error toggling like:', error);
     }
+    // Toggle the isLiked state immediately after the user clicks
+    setIsLiked(!isLiked);
   };
 
   const handleBookmark = async () => {
@@ -149,39 +151,67 @@ const RecipeDetail = () => {
   }
 
   return (
-      <div key={post.id} className="recipe-detail">
-        <Header></Header>
-      {post.image && <img src={post.image} alt={post.title} />}
-      <h2>{post.title}</h2>
-      <p>By: {post.author}</p>
-      <p>{post.excerpt}</p>
-      <h3>Contents:</h3>
-      <p>{post.content}</p>
-      {/* Display max cooking time */}
-      <h3>Max Cooking Time:</h3>
-      <p>{post.max_cooking_time} minutes</p>
+    <div key={post.id} className="detail-container">
+      <header className="header-flex">
+        <Logo></Logo>
+        <UserControl />
+      </header>
+      <div style={{ borderBottom: '0.5px solid #CCCCCC', marginTop: '3%', marginBottom: '3%' }}></div>
 
-      {/* Display comments */}
-      <h3>Comments:</h3>
-      <ul>
-        {comments.map((comment, index) => (
-          <li key={index}>{comment.content}</li>
-        ))}
-      </ul>
+      <article>
+        {post.image && <img src={post.image} alt={post.title} />}
+        <div>
+          <Tooltip title="Like">
+            <IconButton onClick={handleLike} color={isLiked ? 'secondary' : 'default'}>
+              {isLiked ? <Favorite style={{ color: isLiked ? '#F1BD22' : 'inherit' }} /> : <FavoriteBorder />}
+            </IconButton>
+          </Tooltip>
 
-      {/* Comment form */}
-      <input type="text" value={comment} onChange={handleCommentChange} />
-      <button onClick={handleSubmitComment}>Submit Comment</button>
+          <Tooltip title="Collect">
+            <IconButton onClick={handleBookmark} color={isBookmarked ? 'secondary' : 'default'}>
+              {isBookmarked ? <Star style={{ color: isBookmarked ? '#F1BD22' : 'inherit' }} /> : <StarBorder />}
+            </IconButton>
+          </Tooltip>
+        </div>
+        <h2>{post.title}</h2>
+        <p>By: {post.author}</p>
+        <p>{post.excerpt}</p>
+        <h3>Contents:</h3>
+        <p>{post.content}</p>
+        {/* Display max cooking time */}
+        <h3>Max Cooking Time:</h3>
+        <p>{post.max_cooking_time} minutes</p>
 
-      {/* Like button */}
-      <button onClick={handleLike}>{isLiked ? 'Unlike' : 'Like'}</button>
-      <span>Likes: {likes}</span>
+        {/* Display comments */}
 
-      {/* Bookmark button */}
-      <button onClick={handleBookmark}>{isBookmarked ? 'Remove Bookmark' : 'Bookmark'}</button>
+        <div>
+          <textarea
+            value={comment}
+            onChange={handleCommentChange}
+            rows={4}
+            cols={50}
+            placeholder="Enter your comment..."
+          />
+        </div>
+        <div>
+          <button onClick={handleSubmitComment}>Submit</button>
+        </div>
+
+        <h3>Comments:</h3>
+        <ul>
+          {comments.map((comment, index) => (
+            <li key={index}>
+              <strong>{comment.author}: </strong>{comment.content}
+            </li>
+          ))}
+        </ul>
+      </article>
+
+
+
       <Footer></Footer>
-      </div>
-      
+    </div>
+
   );
 };
 
