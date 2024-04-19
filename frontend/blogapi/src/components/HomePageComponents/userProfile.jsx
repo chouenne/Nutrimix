@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "./axios";
 import { Link } from "react-router-dom";
-import "../../css/UserProfile.css";
+import "../../css/userProfile.css";
 import Footer from "./Footer";
 import Typography from "@mui/material/Typography";
 import Logo from "./Logo.jsx";
