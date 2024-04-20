@@ -5,6 +5,7 @@ import Footer from '../components/HomePageComponents/Footer';
 import RecipeList from '../components/HomePageComponents/RecipeList';
 import Bigbanner from '../components/HomePageComponents/Bigbanner';
 import Headerr from '../components/HomePageComponents/Headerr';
+import Portfolio from '../components/HomePageComponents/portfolio/Portfolio'
 
 
 function Home() {
@@ -19,6 +20,7 @@ function Home() {
       </div>
       <Bigbanner></Bigbanner>
       <RecipeList searchQuery={searchQuery} /> {/* Pass searchQuery as prop to RecipeList */}
+      {/* <Portfolio /> */}
       <footer>
         <Footer />
       </footer>
