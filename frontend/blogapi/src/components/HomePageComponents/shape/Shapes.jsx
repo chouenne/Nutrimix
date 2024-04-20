@@ -4,7 +4,7 @@ import { useRef, useLayoutEffect } from "react";
 import { transition } from "./setting";
 import { Canvas, useThree } from "@react-three/fiber";
 import { useSmoothTransform } from "./use-smooth-transform";
-import "./Shapes.css";
+// import "./Shapes.css";
 
 export function Shapes({ isHover, isPress, mouseX, mouseY }) {
     const lightRotateX = useSmoothTransform(mouseY, spring, mouseToLightRotation);

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import FilterButton from '../components/HomePageComponents/FilterButton';
 import Footer from '../components/HomePageComponents/Footer';
 import RecipeList from '../components/HomePageComponents/RecipeList';
-import Bigbanner from '../components/HomePageComponents/Bigbanner';
+import Bigbanner from '../components/HomePageComponents/Bigbanner/Bigbanner';
 import Headerr from '../components/HomePageComponents/Headerr';
 import Portfolio from '../components/HomePageComponents/portfolio/Portfolio'
 
