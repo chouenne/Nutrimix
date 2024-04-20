@@ -9,7 +9,7 @@ const backgroundImage =
 const divStyle = {
     background: `url(${backgroundImage}) center / cover`,
     backgroundColor: '#7fc7d9', // Average color of the background image.
-    minHeight: '100vh', // Ensure the div covers the entire viewport height
+    minHeight: '50vh', // Ensure the div covers the entire viewport height
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
