@@ -20,7 +20,7 @@ function Home() {
       </div>
       <Bigbanner></Bigbanner>
       <RecipeList searchQuery={searchQuery} /> {/* Pass searchQuery as prop to RecipeList */}
-      {/* <Portfolio /> */}
+      <Portfolio />
       <footer>
         <Footer />
       </footer>
