@@ -19,12 +19,12 @@ const RecipeList = () => {
     const [error, setError] = useState(null);
     const [newPost, setNewPost] = useState({
         title: "",
-        category: "", // Change to store category name instead of ID
+        category: "",
         ingredient: "",
         excerpt: "",
         content: "",
         image: null,
-        maxCookingTime: 0,
+        maxCookingTime: "",
     });
     const [categories, setCategories] = useState([]);
     const [editingPostId, setEditingPostId] = useState(null);
@@ -94,16 +94,11 @@ const RecipeList = () => {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        // If the target field is "category", find the corresponding category ID
-        const categoryId =
-            categories.find((category) => category.name === value)?.id || "";
-        console.log(categoryId, "categoryId");
-        // Update the newPost state with the category ID
         setNewPost((prevState) => ({
             ...prevState,
-            [name]: name === "category" ? categoryId : value,
+            [name]: name === "category" ? value : value,
             maxCookingTime:
-                name === "maxCookingTime" ? parseInt(value) : prevState.maxCookingTime, // Parse the selected value to an integer
+                name === "maxCookingTime" ? parseInt(value) : prevState.maxCookingTime || 0,
         }));
     };
 
@@ -233,7 +228,7 @@ const RecipeList = () => {
                     onChange={handleChange}
                     placeholder="Title"
                     variant="outlined"
-                    margin="normal"
+                    margin="dense"
                 // sx={{ borderRadius: '25px' }} 
                 />
                 <Select
@@ -244,15 +239,13 @@ const RecipeList = () => {
                     onChange={handleChange}
                     placeholder="Category"
                     variant="outlined"
-                    margin="normal"
+                    margin="dense"
                 >
                     <MenuItem value="">
                         <em>Select Category</em>
                     </MenuItem>
-                    {categories.map((category, index) => (
-                        <MenuItem key={index} value={category.name}>
-                            {category.name}
-                        </MenuItem>
+                    {categories.map((category) => (
+                        <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
                     ))}
                 </Select>
                 <TextField
@@ -263,7 +256,7 @@ const RecipeList = () => {
                     onChange={handleChange}
                     placeholder="Ingredient"
                     variant="outlined"
-                    margin="normal"
+                    margin="dense"
                 />
                 <TextField
                     fullWidth
@@ -273,7 +266,7 @@ const RecipeList = () => {
                     onChange={handleChange}
                     placeholder="Excerpt"
                     variant="outlined"
-                    margin="normal"
+                    margin="dense"
                 />
                 <TextField
                     fullWidth
@@ -283,7 +276,7 @@ const RecipeList = () => {
                     onChange={handleChange}
                     placeholder="Content"
                     variant="outlined"
-                    margin="normal"
+                    margin="dense"
                 />
                 <input type="file" onChange={handleImageChange} />
                 <Select
@@ -293,7 +286,7 @@ const RecipeList = () => {
                     value={newPost.maxCookingTime}
                     onChange={handleChange}
                     variant="outlined"
-                    margin="normal"
+                    margin="dense"
                     defaultValue=""
                     // Adding style to change the color of the placeholder text
                     sx={{

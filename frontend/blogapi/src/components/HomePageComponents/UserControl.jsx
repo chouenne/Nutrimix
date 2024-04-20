@@ -19,7 +19,7 @@ const UserControl = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    
+
     const checkAuthentication = async () => {
       // Check if access token exists in local storage
 
@@ -52,13 +52,14 @@ const UserControl = () => {
     localStorage.removeItem("access_token");
     setIsAuthenticated(false);
     setUser({});
+    navigate('/');
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-//same with handle click
+  //same with handle click
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -76,87 +77,87 @@ const UserControl = () => {
 
   return (
     <div className="flex uppercase font-semibold">
-    {isAuthenticated ? (
-      <IconButton
-        onClick={handleMenu}
-        sx={{
-          borderRadius: "50px",
-          border: "1px solid darkgray",
-          padding: "6px", 
-        }}
-      >
-        <MenuIcon />
-        <AccountCircleIcon />
-      </IconButton>
-    ) : (
-      <>
-        <Button
-          href="#"
-          color="primary"
-          variant="outlined"
+      {isAuthenticated ? (
+        <IconButton
+          onClick={handleMenu}
           sx={{
-            margin: "0 8px",
-            color: "#306A09",
-            borderColor: "#306A09",
-          }} // Set green color for text and border
-          component={NavLink}
-          to="/login"
+            borderRadius: "50px",
+            border: "1px solid darkgray",
+            padding: "6px",
+          }}
         >
-          Login
-        </Button>
-        <Button
-          href="#"
-          color="primary"
-          variant="outlined"
-          sx={{
-            margin: "0 8px",
-            color: "#306A09",
-            borderColor: "#306A09",
-          }} // Set green color for text and border
-          component={NavLink}
-          to="/register"
-        >
-          Register
-        </Button>
-      </>
-    )}
-  
-    <Menu
-      id="menu-appbar"
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={Boolean(anchorEl)}
-      onClose={handleClose}
-    >
-      {isAuthenticated && (
+          <MenuIcon />
+          <AccountCircleIcon />
+        </IconButton>
+      ) : (
         <>
-          <MenuItem onClick={handleProfile}>User Zone</MenuItem>
-          <MenuItem onClick={handleMyFavorites}>Recipe Collection</MenuItem>
-          {user.is_superuser && (
-            <MenuItem onClick={handleProfileadmin}>
-              <NavLink
-                to="/ManageAccounts"
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                Manage Accounts
-              </NavLink>
-            </MenuItem>
-          )}
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          <Button
+            href="#"
+            color="primary"
+            variant="outlined"
+            sx={{
+              margin: "0 8px",
+              color: "#306A09",
+              borderColor: "#306A09",
+            }} // Set green color for text and border
+            component={NavLink}
+            to="/login"
+          >
+            Login
+          </Button>
+          <Button
+            href="#"
+            color="primary"
+            variant="outlined"
+            sx={{
+              margin: "0 8px",
+              color: "#306A09",
+              borderColor: "#306A09",
+            }} // Set green color for text and border
+            component={NavLink}
+            to="/register"
+          >
+            Register
+          </Button>
         </>
       )}
-    </Menu>
-  </div>
-  
-  
+
+      <Menu
+        id="menu-appbar"
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        style={{ display: !isAuthenticated && 'none' }}
+      >
+        {isAuthenticated && (
+          <>
+            <MenuItem onClick={handleProfile}>User Zone</MenuItem>
+            <MenuItem onClick={handleMyFavorites}>Recipe Collection</MenuItem>
+            {user.is_superuser && (
+              <MenuItem onClick={handleProfileadmin}>
+                <NavLink
+                  to="/ManageAccounts"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  Manage Accounts
+                </NavLink>
+              </MenuItem>
+            )}
+            <MenuItem onClick={handleLogout} >Logout</MenuItem>
+          </>
+        )}
+      </Menu>
+    </div>
+
+
   );
 };
 
