@@ -4,6 +4,11 @@ import { useRef, useLayoutEffect } from "react";
 import { transition } from "./setting";
 import { Canvas, useThree } from "@react-three/fiber";
 import { useSmoothTransform } from "./use-smooth-transform";
+import { TextureLoader } from "three";
+import img11 from "../../../assets/images/11.jpg"; // Import the image
+import img22 from "../../../assets/images/22.jpg";
+import img33 from "../../../assets/images/33.jpg";
+import { useLoader } from "@react-three/fiber";
 // import "./Shapes.css";
 
 export function Shapes({ isHover, isPress, mouseX, mouseY }) {
@@ -28,10 +33,18 @@ export function Shapes({ isHover, isPress, mouseX, mouseY }) {
                         hover: { z: isPress ? -0.9 : 0 }
                     }}
                 >
-                    <Sphere />
+                    {/* <Sphere />
                     <Cone />
-                    <Torus />
-                    <Icosahedron />
+                    <Torus /> */}
+                    <motion.group>
+                        <CustomImage position={[1.5, 0.5, 1.2]} src={img11} />
+                    </motion.group>
+                    <motion.group>
+                        <CustomImage position={[-0.8, -0.5, 0]} src={img22} />
+                    </motion.group>
+                    <motion.group>
+                        <CustomImage position={[-1.1, 1, 0]} src={img33} />
+                    </motion.group>
                 </motion.group>
             </MotionConfig>
         </Canvas>
@@ -41,19 +54,19 @@ export function Shapes({ isHover, isPress, mouseX, mouseY }) {
 export function Lights() {
     return (
         <>
-            <spotLight color="#61dafb" position={[-10, -10, -10]} intensity={0.2} />
-            <spotLight color="#61dafb" position={[-10, 0, 15]} intensity={0.8} />
+            <spotLight color="#61dafb" position={[10, -10, 10]} intensity={0.2} />
+            <spotLight color="#61dafb" position={[10, 0, 15]} intensity={0.8} />
             <spotLight color="#61dafb" position={[-5, 20, 2]} intensity={0.5} />
             <spotLight color="#f2056f" position={[15, 10, -2]} intensity={2} />
             <spotLight color="#f2056f" position={[15, 10, 5]} intensity={1} />
-            <spotLight color="#b107db" position={[5, -10, 5]} intensity={0.8} />
+            <spotLight color="#b107db" position={[-5, -10, 5]} intensity={0.8} />
         </>
     );
 }
 
 export function Sphere() {
     return (
-        <motion.mesh position={[-0.5, -0.5, 0]} variants={{ hover: { z: 2 } }}>
+        <motion.mesh position={[0.5, 0.5, 0]} variants={{ hover: { z: 2 } }}>
             <sphereGeometry args={[0.4]} />
             <Material />
         </motion.mesh>
@@ -63,12 +76,12 @@ export function Sphere() {
 export function Cone() {
     return (
         <motion.mesh
-            position={[-0.8, 0.4, 0]}
-            rotation={[-0.5, 0, -0.3]}
+            position={[-0.3, 0.4, 0]}
+            rotation={[0, 0.5, 0]}
             variants={{
                 hover: {
                     z: 1.1,
-                    x: -1.5,
+                    x: -0.5,
                     rotateX: -0.2,
                     rotateZ: 0.4
                 }
@@ -83,8 +96,8 @@ export function Cone() {
 export function Torus() {
     return (
         <motion.mesh
-            position={[0.1, 0.4, 0]}
-            rotation={[-0.5, 0.5, 0]}
+            position={[0.5, -0.4, 0]}
+            rotation={[0, 0, 0]}
             variants={{
                 hover: {
                     y: 0.5,
@@ -99,22 +112,12 @@ export function Torus() {
     );
 }
 
-export function Icosahedron() {
+export function CustomImage({ position, src }) {
+    const texture = useLoader(TextureLoader, src);
     return (
-        <motion.mesh
-            position={[1.1, 0, 0]}
-            rotation-z={0.5}
-            variants={{
-                hover: {
-                    x: 1.8,
-                    z: 0.6,
-                    y: 0.6,
-                    rotateZ: -0.5
-                }
-            }}
-        >
-            <icosahedronGeometry args={[0.7, 0]} />
-            <Material />
+        <motion.mesh position={position} variants={{ hover: { z: 0.6 } }}>
+            <planeGeometry args={[1, 1]} />
+            <meshBasicMaterial map={texture} transparent />
         </motion.mesh>
     );
 }
