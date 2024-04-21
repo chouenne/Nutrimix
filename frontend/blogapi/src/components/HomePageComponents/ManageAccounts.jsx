@@ -141,6 +141,12 @@ function ManageAccounts() {
             <TableContainer component={Paper}>
                 <Table aria-label="custom pagination table">
                     <TableBody>
+                        <TableRow sx={{ '&:nth-of-type(odd)': { backgroundColor: '#bde0fe' } }}>
+                            <TableCell>Number</TableCell>
+                            <TableCell>Username</TableCell>
+                            <TableCell>Email</TableCell>
+                            <TableCell>Operation</TableCell>
+                        </TableRow>
                         {(rowsPerPage > 0
                             ? users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             : users
