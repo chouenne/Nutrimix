@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import Logo from "./Logo.jsx";
 import UserControl from "./UserControl.jsx";
 import {
-    Box, TextField, Select, MenuItem, Button, IconButton
+    Box, TextField, Select, MenuItem, Button, IconButton, FormControl, InputLabel
 } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -24,7 +24,7 @@ const RecipeList = () => {
         excerpt: "",
         content: "",
         image: null,
-        maxCookingTime: "",
+        maxCookingTime: null,
     });
     const [categories, setCategories] = useState([]);
     const [editingPostId, setEditingPostId] = useState(null);
@@ -98,7 +98,7 @@ const RecipeList = () => {
             ...prevState,
             [name]: name === "category" ? value : value,
             maxCookingTime:
-                name === "maxCookingTime" ? parseInt(value) : prevState.maxCookingTime || 0,
+                name === "maxCookingTime" ? parseInt(value) : prevState.maxCookingTime || null,
         }));
     };
 
@@ -141,7 +141,7 @@ const RecipeList = () => {
                 excerpt: "",
                 content: "",
                 image: null,
-                maxCookingTime: "",
+                maxCookingTime: null,
             });
         } catch (error) {
             console.error("Failed to add post:", error);
@@ -231,23 +231,22 @@ const RecipeList = () => {
                     margin="dense"
                 // sx={{ borderRadius: '25px' }} 
                 />
-                <Select
-                    fullWidth
-                    label="Category"
-                    name="category"
-                    value={newPost.category}
-                    onChange={handleChange}
-                    placeholder="Category"
-                    variant="outlined"
-                    margin="dense"
-                >
-                    <MenuItem value="">
-                        <em>Select Category</em>
-                    </MenuItem>
-                    {categories.map((category) => (
-                        <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
-                    ))}
-                </Select>
+                <FormControl fullWidth>
+                    <InputLabel id="select-category">Select Category</InputLabel>
+                    <Select
+                        labelId="select-category"
+                        id="select-category"
+                        name="category"
+                        value={newPost.category}
+                        onChange={handleChange}
+                        variant="outlined"
+                        margin="dense"
+                    >
+                        {categories.map((category) => (
+                            <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
                 <TextField
                     fullWidth
                     label="Ingredient"
@@ -268,7 +267,7 @@ const RecipeList = () => {
                     variant="outlined"
                     margin="dense"
                 />
-                <TextField
+                {/* <TextField
                     fullWidth
                     label="Content"
                     name="content"
@@ -277,32 +276,41 @@ const RecipeList = () => {
                     placeholder="Content"
                     variant="outlined"
                     margin="dense"
-                />
+                /> */}
                 <input type="file" onChange={handleImageChange} />
-                <Select
-                    fullWidth
-                    label="Max Cooking Time"
-                    name="maxCookingTime"
-                    value={newPost.maxCookingTime}
-                    onChange={handleChange}
-                    variant="outlined"
-                    margin="dense"
-                    defaultValue=""
-                    // Adding style to change the color of the placeholder text
-                    sx={{
-                        "& .MuiSelect-placeholder": {
-                            color: "rgba(0, 0, 0, 0.54)", // Adjust the color as needed
-                        },
-                    }}
-                >
-                    <MenuItem value="" disabled>
-                        Select Max Cooking Time
-                    </MenuItem>
-                    <MenuItem value="5">5 mins</MenuItem>
-                    <MenuItem value="10">10 mins</MenuItem>
-                    <MenuItem value="15">15 mins</MenuItem>
-                    <MenuItem value="20">20 mins</MenuItem>
-                </Select>
+                <FormControl fullWidth>
+                    <InputLabel id="select-max-cooking-time">Select Max Cooking Time</InputLabel>
+                    <Select
+                        labelId="select-max-cooking-time"
+                        id="select-max-cooking-time"
+                        name="maxCookingTime"
+                        value={newPost.maxCookingTime}
+                        onChange={handleChange}
+                        variant="outlined"
+                        margin="dense"
+                    >
+                        <MenuItem value={null}>
+                            <em>Select Max Cooking Time</em>
+                        </MenuItem>
+                        <MenuItem value="5">5 mins</MenuItem>
+                        <MenuItem value="10">10 mins</MenuItem>
+                        <MenuItem value="15">15 mins</MenuItem>
+                        <MenuItem value="20">20 mins</MenuItem>
+                    </Select>
+
+                    <TextField
+                        fullWidth
+                        id="standard-multiline-flexible"
+                        label="Step"
+                        name="content"
+                        multiline
+                        maxRows={4}
+                        value={newPost.content}
+                        onChange={handleChange}
+                        placeholder="Step"
+                        variant="standard"
+                    />
+                </FormControl>
 
                 {editingPostId ? (
                     <Button
