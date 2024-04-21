@@ -190,8 +190,13 @@ const RecipeDetail = () => {
         <h2>{post.title}</h2>
         <p>By: {post.author}</p>
         <p>{post.excerpt}</p>
-        <h3>Steps:</h3>
-        <p>{post.content}</p>
+        {/* <p>{post.content}</p> */}
+        <div style={{ fontSize: '16px', lineHeight: '1.5' }}>
+          <h3>Steps:</h3>
+          <div>{post.content.split('\n').map((item, key) => {
+            return <span key={key}>{item}<br /></span>
+          })}</div>
+        </div>
         {/* Display max cooking time */}
         <h3>Max Cooking Time:</h3>
         <p>{post.max_cooking_time} minutes</p>
