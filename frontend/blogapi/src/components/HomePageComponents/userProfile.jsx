@@ -229,9 +229,9 @@ const RecipeList = () => {
                     placeholder="Title"
                     variant="outlined"
                     margin="dense"
-                // sx={{ borderRadius: '25px' }} 
+                    sx={{ marginBottom: '2%' }} 
                 />
-                <FormControl fullWidth>
+                <FormControl fullWidth >
                     <InputLabel id="select-category">Select Category</InputLabel>
                     <Select
                         labelId="select-category"
@@ -241,6 +241,7 @@ const RecipeList = () => {
                         onChange={handleChange}
                         variant="outlined"
                         margin="dense"
+                        sx={{ marginBottom: '1%' }} 
                     >
                         {categories.map((category) => (
                             <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
@@ -256,6 +257,7 @@ const RecipeList = () => {
                     placeholder="Ingredient"
                     variant="outlined"
                     margin="dense"
+                    sx={{ marginBottom: '1%' }} 
                 />
                 <TextField
                     fullWidth
@@ -277,7 +279,7 @@ const RecipeList = () => {
                     variant="outlined"
                     margin="dense"
                 /> */}
-                <input type="file" onChange={handleImageChange} />
+                <input type="file" onChange={handleImageChange} style={{ marginTop: '3%', marginBottom: '3%' }} />
                 <FormControl fullWidth>
                     <InputLabel id="select-max-cooking-time">Select Max Cooking Time</InputLabel>
                     <Select
@@ -309,6 +311,7 @@ const RecipeList = () => {
                         onChange={handleChange}
                         placeholder="Step"
                         variant="standard"
+                        sx={{ marginBottom: '3%' }} 
                     />
                 </FormControl>
 
