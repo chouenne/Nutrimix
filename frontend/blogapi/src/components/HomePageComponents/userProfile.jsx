@@ -306,7 +306,7 @@ const RecipeList = () => {
                         label="Step"
                         name="content"
                         multiline
-                        maxRows={4}
+                        rows={4}
                         value={newPost.content}
                         onChange={handleChange}
                         placeholder="Step"
