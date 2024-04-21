@@ -73,13 +73,14 @@ const RecipeList = ({ searchQuery }) => {
 
     return (
         <div>
-            <h2>Recipe</h2>
-            <FilterButton onApplyFilter={handleApplyFilter} />
-            <SortMenu onSelectCategory={handleCategorySelect} />
+           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <SortMenu onSelectCategory={handleCategorySelect} />
+    <FilterButton onApplyFilter={handleApplyFilter} />
+</div>
             <div className="recipe-list">
                 {filteredPosts.map((post) => (
                     <div key={post.id} className="recipe-card">
-                        <Link to={`/recipe/${post.id}`}>
+                        <Link to={`/recipe/${post.id}` } className="recipe-link">
                             {post.image && <img src={post.image} alt={post.title} />}
                             <h3>{post.title}</h3>
                             <p>{post.author}</p>

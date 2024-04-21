@@ -18,30 +18,35 @@ const Filter = ({ onApplyFilter }) => {
   };
 
   return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '40vh' }}>
     <div>
-      <Typography variant="h6" gutterBottom>
-        Maximum Cooking Time
-      </Typography>
-      <Slider
-        value={maxCookingTime}
-        onChange={handleSliderChange}
-        aria-labelledby="discrete-slider"
-        valueLabelDisplay="auto"
-        step={null}
-        marks={[
-          { value: 5, label: '5' },
-          { value: 10, label: '10' },
-          { value: 15, label: '15' },
-          { value: 20, label: '20' },
-        ]}
-        min={5}
-        max={20}
-      />
-      <Button onClick={applyFilters} variant="contained" color="primary">
-        Apply Filters
-      </Button>
+    <Typography variant="h6" gutterBottom>
+    Maximum Cooking Time
+    </Typography>
+    <Slider
+    value={maxCookingTime}
+    onChange={handleSliderChange}
+    aria-labelledby="discrete-slider"
+    valueLabelDisplay="auto"
+    step={null}
+    marks={[
+    { value: 5, label: '5' },
+    { value: 10, label: '10' },
+    { value: 15, label: '15' },
+    { value: 20, label: '20' },
+    ]}
+    min={5}
+    max={20}
+    style={{
+    color: '#333333', 
+    }}
+    />
+    <Button onClick={applyFilters} variant="contained" color="primary" style={{ backgroundColor: '#333333' }}>
+    Apply Filters
+    </Button>
     </div>
-  );
+    </div>
+    );
 };
 
 export default Filter;
