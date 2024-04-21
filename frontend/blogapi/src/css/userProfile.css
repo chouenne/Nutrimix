@@ -2,20 +2,16 @@
 element.style{
   display:none;
 }
-.profile-container{
+.all-container{
   max-width: 90%;
   margin-left: auto;
   margin-right: auto;
   padding-top: 3%;
 }
 
-.profile-header-flex{
+.header-flex{
   display:flex;
   justify-content: space-between;
-}
-
-.profile-contain{
-  text-align: center;
 }
 
 ul{
