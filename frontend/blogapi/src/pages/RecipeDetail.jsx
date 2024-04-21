@@ -8,7 +8,6 @@ import Logo from '../components/HomePageComponents/Logo';
 import { IconButton, Tooltip } from '@mui/material';
 import { Favorite, FavoriteBorder, Star, StarBorder } from '@mui/icons-material';
 
-
 const RecipeDetail = () => {
   const { recipeId } = useParams();
   const [post, setPost] = useState(null);
@@ -19,8 +18,14 @@ const RecipeDetail = () => {
   const [likes, setLikes] = useState(1);
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    const accessToken = localStorage.getItem('access_token');
+    if (accessToken) {
+      setIsLoggedIn(true);
+    }
+
     if (!recipeId) return;
     const fetchPost = async () => {
       try {
@@ -51,7 +56,6 @@ const RecipeDetail = () => {
 
     const fetchBookmarkInfo = async () => {
       try {
-        const accessToken = localStorage.getItem('access_token');
         if (!accessToken) {
           console.error('Access token not found in local storage.');
           return;
@@ -168,9 +172,19 @@ const RecipeDetail = () => {
           </Tooltip>
 
           <Tooltip title="Collect">
-            <IconButton onClick={handleBookmark} color={isBookmarked ? 'secondary' : 'default'}>
-              {isBookmarked ? <Star style={{ color: isBookmarked ? '#F1BD22' : 'inherit' }} /> : <StarBorder />}
-            </IconButton>
+            {isLoggedIn ? (
+              <IconButton onClick={handleBookmark} color={isBookmarked ? 'secondary' : 'default'}>
+                {isBookmarked ? <Star style={{ color: isBookmarked ? '#F1BD22' : 'inherit' }} /> : <StarBorder />}
+              </IconButton>
+            ) : (
+              <span>
+                <Tooltip title="Login to bookmark">
+                  <IconButton color="default" disabled>
+                    <StarBorder />
+                  </IconButton>
+                </Tooltip>
+              </span>
+            )}
           </Tooltip>
         </div>
         <h2>{post.title}</h2>
@@ -185,16 +199,37 @@ const RecipeDetail = () => {
         {/* Display comments */}
 
         <div>
-          <textarea
-            value={comment}
-            onChange={handleCommentChange}
-            rows={4}
-            cols={50}
-            placeholder="Enter your comment..."
-          />
+          {isLoggedIn ? (
+            <textarea
+              value={comment}
+              onChange={handleCommentChange}
+              rows={4}
+              cols={50}
+              placeholder="Enter your comment..."
+            />
+          ) : (
+            <span>
+              <Tooltip title="Login to comment">
+                <textarea
+                  value={comment}
+                  onChange={handleCommentChange}
+                  rows={4}
+                  cols={50}
+                  placeholder="Login to comment"
+                  disabled
+                />
+              </Tooltip>
+            </span>
+          )}
         </div>
         <div>
-          <button onClick={handleSubmitComment}>Submit</button>
+          {isLoggedIn ? (
+            <button onClick={handleSubmitComment}>Submit</button>
+          ) : (
+            <Tooltip title="Login to comment">
+              <button disabled>Submit</button>
+            </Tooltip>
+          )}
         </div>
 
         <h3>Comments:</h3>
@@ -207,11 +242,8 @@ const RecipeDetail = () => {
         </ul>
       </article>
 
-
-
       <Footer></Footer>
     </div>
-
   );
 };
 
