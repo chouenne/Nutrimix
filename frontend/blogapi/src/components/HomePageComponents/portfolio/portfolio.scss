@@ -1,91 +1,91 @@
 
-.portfolio {
-  position: relative;
+// .portfolio {
+//   position: relative;
 
-  .progress {
-    position: sticky;
-    top: 0;
-    left: 0;
-    padding-top: 50px;
-    text-align: center;
-    color: orange;
-    font-size: 36px;
+//   .progress {
+//     position: sticky;
+//     top: 0;
+//     left: 0;
+//     padding-top: 50px;
+//     text-align: center;
+//     color: orange;
+//     font-size: 36px;
 
 
 
-    .progressBar {
-      height: 10px;
-      background-color: white;
-    }
-  }
+//     .progressBar {
+//       height: 10px;
+//       background-color: white;
+//     }
+//   }
 
-  .container {
-    background-color: #e5e5eb;
-      color: lightgray;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+//   .container {
+//     background-color: #e5e5eb;
+//       color: lightgray;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     width: 100%;
+//     height: 100%;
+//     overflow: hidden;
 
-    .wrapper {
-      max-width: 1366px;
-      height: 100%;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 50px;
+//     .wrapper {
+//       max-width: 1366px;
+//       height: 100%;
+//       margin: auto;
+//       display: flex;
+//       align-items: center;
+//       justify-content: center;
+//       gap: 50px;
 
    
 
-      .imageContainer {
-        flex: 1;
-        height: 50%;
+//       .imageContainer {
+//         flex: 1;
+//         height: 50%;
 
       
 
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
+//         img {
+//           width: 100%;
+//           height: 100%;
+//           object-fit: cover;
 
-        }
-      }
+//         }
+//       }
 
-      .textContainer {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
+//       .textContainer {
+//         flex: 1;
+//         display: flex;
+//         flex-direction: column;
+//         gap: 30px;
 
    
 
-        h2 {
-          font-size: 52px;
+//         h2 {
+//           font-size: 52px;
   
-        }
+//         }
 
-        p {
-          color: gray;
-          font-size: 18px;
-          margin-top: 0;
-          margin-bottom: 1rem;
-          line-height: 36px;
+//         p {
+//           color: gray;
+//           font-size: 18px;
+//           margin-top: 0;
+//           margin-bottom: 1rem;
+//           line-height: 36px;
 
 
-        }
+//         }
 
-        button {
-          background-color: orange;
-          border: none;
-          border-radius: 10px;
-          padding: 10px;
-          width: 200px;
-          cursor: pointer;
-        }
-      }
-    }
-  }
-}
+//         button {
+//           background-color: orange;
+//           border: none;
+//           border-radius: 10px;
+//           padding: 10px;
+//           width: 200px;
+//           cursor: pointer;
+//         }
+//       }
+//     }
+//   }
+// }
