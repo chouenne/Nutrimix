@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import FilterButton from '../components/HomePageComponents/FilterButton';
 import Footer from '../components/HomePageComponents/Footer';
 import RecipeList from '../components/HomePageComponents/RecipeList';
-import Bigbanner from '../components/HomePageComponents/Bigbanner/Bigbanner';
+// import Bigbanner from '../components/HomePageComponents/Bigbanner/Bigbanner';
 import Headerr from '../components/HomePageComponents/Headerr';
-import Portfolio from '../components/HomePageComponents/portfolio/Portfolio'
+// import Portfolio from '../components/HomePageComponents/portfolio/Portfolio'
 
 
 function Home() {
@@ -18,9 +18,9 @@ function Home() {
           {/* Your existing header content */}
         </div>      <div style={{ display: 'flex' }}>
       </div>
-      <Bigbanner></Bigbanner>
+      {/* <Bigbanner></Bigbanner> */}
       <RecipeList searchQuery={searchQuery} /> {/* Pass searchQuery as prop to RecipeList */}
-      <Portfolio />
+      {/* <Portfolio /> */}
       <footer>
         <Footer />
       </footer>
