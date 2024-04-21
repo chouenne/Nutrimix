@@ -203,9 +203,9 @@ const RecipeList = () => {
     }
 
     return (
-        <div className="profile-container">
+        <div className="all-container">
 
-            <header className="profile-header-flex">
+            <header className="header-flex">
                 <Logo />
                 <UserControl />
             </header>

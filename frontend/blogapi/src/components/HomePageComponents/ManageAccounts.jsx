@@ -21,6 +21,8 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import "../../css/RecipeList.css";
 
 const deleteUserByEmail = async (email, setUsers) => {
 
@@ -131,7 +133,7 @@ function ManageAccounts() {
     };
 
     return (
-        <div className="detail-container">
+        <div className="all-container">
             <header className="header-flex" >
                 <Logo />
                 <UserControl />
@@ -141,11 +143,11 @@ function ManageAccounts() {
             <TableContainer component={Paper}>
                 <Table aria-label="custom pagination table">
                     <TableBody>
-                        <TableRow sx={{ '&:nth-of-type(odd)': { backgroundColor: '#bde0fe' } }}>
-                            <TableCell>Number</TableCell>
-                            <TableCell>Username</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Operation</TableCell>
+                        <TableRow sx={{ '&:nth-of-type(odd)': { backgroundColor: '#559E34' } }}>
+                            <TableCell sx={{color:'white'}}>Number</TableCell>
+                            <TableCell sx={{color:'white'}}>Username</TableCell>
+                            <TableCell sx={{color:'white'}}>Email</TableCell>
+                            <TableCell sx={{color:'white'}}>Operation</TableCell>
                         </TableRow>
                         {(rowsPerPage > 0
                             ? users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -162,7 +164,12 @@ function ManageAccounts() {
                                     {user.email}
                                 </TableCell>
                                 <TableCell>
-                                    <Button variant="contained" color="secondary" onClick={() => deleteUserByEmail(user.email, setUsers)}>Delete</Button>
+                                <DeleteIcon
+    variant="contained"
+    color="secondary"
+    onClick={() => deleteUserByEmail(user.email, setUsers)}
+/>
+
                                 </TableCell>
                             </TableRow>
                         ))}

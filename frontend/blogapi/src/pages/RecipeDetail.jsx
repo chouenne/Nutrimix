@@ -155,7 +155,7 @@ const RecipeDetail = () => {
   }
 
   return (
-    <div key={post.id} className="detail-container">
+    <div key={post.id} className="all-container">
       <header className="header-flex">
         <Logo></Logo>
         <UserControl />

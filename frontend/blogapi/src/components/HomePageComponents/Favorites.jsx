@@ -81,7 +81,7 @@ const Favorites = () => {
     }
 
     return (
-        <div className="detail-container">
+        <div className="all-container">
             <header className="header-flex" >
                 <Logo />
                 <UserControl />

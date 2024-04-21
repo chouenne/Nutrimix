@@ -5,6 +5,15 @@ h3 {
   margin-bottom: 5px;
 }
 
+.all-container{
+  width:90%;
+}
+
+.header-flex{
+  display: flex;
+  justify-content: space-between;
+}
+
 .recipe-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
