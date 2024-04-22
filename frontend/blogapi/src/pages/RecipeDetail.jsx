@@ -171,37 +171,6 @@ return (
 </IconButton>
 </Tooltip>
 
-<<<<<<< HEAD
-          <Tooltip title="Collect">
-            {isLoggedIn ? (
-              <IconButton onClick={handleBookmark} color={isBookmarked ? 'secondary' : 'default'}>
-                {isBookmarked ? <Star style={{ color: isBookmarked ? '#F1BD22' : 'inherit' }} /> : <StarBorder />}
-              </IconButton>
-            ) : (
-              <span>
-                <Tooltip title="Login to bookmark">
-                  <IconButton color="default" disabled>
-                    <StarBorder />
-                  </IconButton>
-                </Tooltip>
-              </span>
-            )}
-          </Tooltip>
-        </div>
-        <h2>{post.title}</h2>
-        <p>By: {post.author}</p>
-        <p>{post.excerpt}</p>
-        {/* <p>{post.content}</p> */}
-        <div style={{ fontSize: '16px', lineHeight: '1.5' }}>
-          <h3>Steps:</h3>
-          <div>{post.content.split('\n').map((item, key) => {
-            return <span key={key}>{item}<br /></span>
-          })}</div>
-        </div>
-        {/* Display max cooking time */}
-        <h3>Max Cooking Time:</h3>
-        <p>{post.max_cooking_time} minutes</p>
-=======
 <Tooltip title="Collect">
 {isLoggedIn ? (
 <IconButton onClick={handleBookmark} color={isBookmarked ? 'secondary' : 'default'}>
@@ -233,7 +202,6 @@ return <span key={key}>{item}<br /></span>
 {/* Display max cooking time */}
 <h3>Max Cooking Time:</h3>
 <p>{post.max_cooking_time} minutes</p>
->>>>>>> xuan
 
 <div>
 {isLoggedIn ? (
