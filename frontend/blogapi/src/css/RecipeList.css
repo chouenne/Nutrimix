@@ -11,6 +11,10 @@ h2{
     margin-top: 5%;
 }
 
+p{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .recipe-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4 columns */
@@ -32,9 +36,17 @@ h2{
   display:flex;
   justify-content: space-between;
 }
-
-.recipe-link {
+.recipe-link
+ {
   text-decoration: none; 
+}
+
+.recipe-link h3{
+  color:#333;
+}
+
+.recipe-link p{
+  color:#a6a6a6;
 }
 
 .custom-button:hover {
