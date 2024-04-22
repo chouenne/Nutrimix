@@ -61,11 +61,11 @@ ul{
 }
 
 .delete-button {
-  color: #9e12c1; /* You can adjust the color */
+  color: #333; /* You can adjust the color */
 }
 
 .edit-button {
-  color:#4fb20c; /* You can adjust the color */
+  color:#333; /* You can adjust the color */
 }
 
 .textfield-container .custom-textfield {

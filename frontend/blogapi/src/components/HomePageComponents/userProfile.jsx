@@ -308,7 +308,7 @@ multiline
 maxRows={4}
 value={newPost.content}
 onChange={handleChange}
-placeholder="Step"
+placeholder="Steps"
 variant="standard"
 sx={{ marginBottom: '3%' }} 
 />
