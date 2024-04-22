@@ -53,3 +53,7 @@ p{
   background-color: lightgreen;
 }
 
+.recipe-link img:hover {
+  /* Define styling for the image when hovering over the link */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a shadow effect */
+}
