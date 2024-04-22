@@ -268,16 +268,7 @@ placeholder="Excerpt"
 variant="outlined"
 margin="dense"
 />
-{/* <TextField
-fullWidth
-label="Content"
-name="content"
-value={newPost.content}
-onChange={handleChange}
-placeholder="Content"
-variant="outlined"
-margin="dense"
-/> */}
+
 <input type="file" onChange={handleImageChange} style={{ marginTop: '3%', marginBottom: '3%' }} />
 <FormControl fullWidth>
 <InputLabel id="select-max-cooking-time">Select Max Cooking Time</InputLabel>
@@ -332,9 +323,7 @@ sx={{ bgcolor: '#F1BD22', '&:hover': { bgcolor: '#E0AB00' } }}
 Add
 </Button>
 )}
-
 </Box>
-
 
 <h2>Manage my recipe released</h2>
 <div className="recipe-listuser">
@@ -361,5 +350,4 @@ Add
 </div>
 );
 };
-
 export default RecipeList;
