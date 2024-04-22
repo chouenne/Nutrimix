@@ -188,9 +188,11 @@ return (
 </Tooltip>
 </div>
 <h2>{post.title}</h2>
-<p>By: {post.author}</p>
+<p style={{color:'#555'}}>By: {post.author}</p>
 <p style={{maxWidth:'80%'}}>{post.excerpt}</p>
 {/* <p>{post.content}</p> */}
+<h3>Ingredients:</h3>
+<p>{post.ingredient}</p>
 <div style={{ fontSize: '16px', lineHeight: '1.5' }}>
 <h3>Steps:</h3>
 <div><p>{post.content.split('\n').map((item, key) => {
@@ -265,7 +267,7 @@ Submit
 
 </div>
 
-<h3>Comments:</h3>
+<h3>Previous Comments:</h3>
 <ul>
 {comments.map((comment, index) => (
 <li key={index} style={{ marginBottom: '8px' }}>
