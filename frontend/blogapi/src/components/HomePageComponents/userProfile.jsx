@@ -319,7 +319,7 @@ sx={{ marginBottom: '3%' }}
 variant="contained"
 // color="primary"
 onClick={handleSaveEdit}
-className="custom-button"
+sx={{ bgcolor: '#559E34', '&:hover': { bgcolor: '#306A09' } }}
 >
 Save Edit
 </Button>
@@ -337,7 +337,7 @@ Add
 
 
 <h2>Manage my recipe released</h2>
-<div className="recipe-list">
+<div className="recipe-listuser">
 {posts.map((post) => (
 <div key={post.id} className="recipe-card">
 <Link to={`/recipe/${post.id}`} className="recipe-link">

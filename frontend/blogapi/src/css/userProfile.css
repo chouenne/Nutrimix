@@ -80,3 +80,9 @@ ul{
   background-color: #4CAF50; /* Change button color on hover */
 }
 
+.recipe-listuser{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  gap: 20px; /* Gap between cards */
+}
+
