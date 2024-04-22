@@ -35,6 +35,10 @@ ul{
   border-radius: 25px;
 }
 
+.recipe-listuser img:hover{
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+}
+
 .filter-flex{
   display:flex;
   justify-content: space-between;
