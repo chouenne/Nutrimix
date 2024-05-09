@@ -1,2 +1,1 @@
-web: gunicorn backend.wsgi:application --pythonpath=./backend
-
+web: gunicorn core.wsgi:application
