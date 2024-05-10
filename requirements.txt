@@ -1,6 +1,10 @@
-http://127.0.0.1:8000/api/users/users/current/
+# http://127.0.0.1:8000/api/users/users/current/
 
-test api  
+# test api  
 
-Content-Type:application/json
-Authorization : JWT accestoken
+# Content-Type:application/json
+# Authorization : JWT accestoken
+
+Django==5.0.3
+djangorestframework==3.15.1
+
